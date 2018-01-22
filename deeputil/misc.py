@@ -390,7 +390,7 @@ class ExpiringCounter(object):
                 else: self.counts[key] = kcount
                 self.count -= count
 
-
+#TODO Examples and Readme.md
 import resource
 def set_file_limits(n):
     '''
@@ -411,7 +411,7 @@ class Dummy(object):
     that does no-operations on method invocations
     but logs all interactions
     
-    # Let us create a dummy object and perform sometime
+    # Let us create a dummy object and perform some
     # random operations on it
     
     >>> d = Dummy(1, a=5)
@@ -441,8 +441,6 @@ class Dummy(object):
     (<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': ['foo', 'bar'], 'args': (), 'kwargs': {}})
     (<deeputil.misc.Dummy object at 0x...>, '__call__', {'prefix': ['foo', 'bar'], 'args': (), 'kwargs': {}})
     '''
-
-    #FIXME: doctest doesn't ignore memory unpredictable outputs (memory addresses)
 
     def _log(self, event, data):
         if not self._quiet:
