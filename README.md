@@ -11,6 +11,7 @@ Commonly re-used logic
 ```
 from deeputil import *
 ```
+sudo pip install wordvecspace
 ```
 >>> dir(deeputil)
 ['StreamCounter', '__builtins__', '__doc__', '__file__', '__name__', '__package__', '__path__', 'keeprunning', 'misc', 'priority_dict', 'streamcounter', 'timer']
@@ -218,4 +219,200 @@ Now do the same as above but ask Dummy to print the activity
 (<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': ['foo', 'bar'], 'args': (), 'kwargs': {}})
 (<deeputil.misc.Dummy object at 0x...>, '__call__', {'prefix': ['foo', 'bar'], 'args': (), 'kwargs': {}})
 ````
-```````````````````````````````````````
+### deeputil.keeprunning module
+```
+>>> from deeputil.keeprunning import *
+```
+#### Keeps running a function running even on error.
+
+ Example 1: dosomething needs to run until completion condition without needing to have a loop in its code. Also, when error happens, we should NOT terminate execution
+ 
+ ```
+>>> from deeputil.misc import AttrDict
+>>> @keeprunning(wait_secs=1)
+... def dosomething(state):
+...     state.i += 1
+...     print (state)
+...     if state.i % 2 == 0:
+...         print("Error happened")
+...         1 / 0 # create an error condition
+...     if state.i >= 7:
+...         print ("Done")
+...         raise keeprunning.terminate
+... 
+>>> state = AttrDict(i=0)
+>>> dosomething(state)
+AttrDict({'i': 1})
+AttrDict({'i': 2})
+Error happened
+AttrDict({'i': 3})
+AttrDict({'i': 4})
+Error happened
+AttrDict({'i': 5})
+AttrDict({'i': 6})
+Error happened
+AttrDict({'i': 7})
+Done
+ ```
+ Example 2: In case you want to log exceptions while dosomething keeps running, or perform any other action when an exceptions arise.
+ ```
+>>> def some_error(fn, args, kwargs, exc):
+...     print (exc)
+... 
+>>> @keeprunning(on_error=some_error)
+... def dosomething(state):
+...     state.i += 1
+...     print (state)
+...     if state.i % 2 == 0:
+...         print("Error happened")
+...         1 / 0 # create an error condition
+...     if state.i >= 7:
+...         print ("Done")
+...         raise keeprunning.terminate
+... 
+
+>>> state = AttrDict(i=0)
+>>> dosomething(state)
+AttrDict({'i': 1})
+AttrDict({'i': 2})
+Error happened
+integer division or modulo by zero
+AttrDict({'i': 3})
+AttrDict({'i': 4})
+Error happened
+integer division or modulo by zero
+AttrDict({'i': 5})
+AttrDict({'i': 6})
+Error happened
+integer division or modulo by zero
+AttrDict({'i': 7})
+Done
+ ```
+ Example 3:Full set of arguments that can be passed in @keeprunning()
+ 
+ ```
+>>> def success(fn, args, kwargs):
+...     print('yay!!')
+... 
+>>> def failure(fn, args, kwargs, exc):
+...     print('fck!', exc)
+... 
+>>> def task_done(fn, args, kwargs):
+...     print('STOPPED AT NOTHING!')
+... 
+>>> @keeprunning(wait_secs=1, exit_on_success=False,
+...             on_success=success, on_error=failure, on_done=task_done)
+... def dosomething(state):
+...     state.i += 1
+...     print (state)
+...     if state.i % 2 == 0:
+...         print("Error happened")
+...         1 / 0 # create an error condition
+...     if state.i >= 7:
+...         print ("Done")
+...         raise keeprunning.terminate
+... 
+>>> state = AttrDict(i=0)
+>>> dosomething(state)
+AttrDict({'i': 1})
+yay!!
+AttrDict({'i': 2})
+Error happened
+('fck!', ZeroDivisionError('integer division or modulo by zero',))
+AttrDict({'i': 3})
+yay!!
+AttrDict({'i': 4})
+Error happened
+('fck!', ZeroDivisionError('integer division or modulo by zero',))
+AttrDict({'i': 5})
+yay!!
+AttrDict({'i': 6})
+Error happened
+('fck!', ZeroDivisionError('integer division or modulo by zero',))
+AttrDict({'i': 7})
+Done
+STOPPED AT NOTHING!
+ ```
+### deeputil.timer module
+```
+>>> from deeputil.timer
+```
+#### To check execution time of a block of code.
+with Timer() as t:
+`<code>`
+print t.interval
+```
+>>> with Timer.block() as t:
+...     time.sleep(1)
+...
+>>> int(t.interval)
+1
+```
+#### To check execution time of a function as follows:
+```
+>>> def logger(details, args, kwargs): #some function that uses the time output
+...     print(details)
+... 
+>>> @FunctionTimer(on_done= logger)
+... def foo(t=10):
+...     print 'foo executing...'
+...     time.sleep(t)
+... 
+>>> @FunctionTimer(on_done= logger)
+... def bar(t, n):
+...     for i in range(n):
+...             print 'bar executing...'
+...             time.sleep(1)
+...     foo(t)
+... 
+>>> bar(3,2)
+bar executing...
+bar executing...
+foo executing...
+('foo', 3)
+('bar', 5)
+```
+
+### deeputil.streamingcounter module
+```
+>>> from deeputil.misc import *
+```
+### deeputil.priority_dict module
+```
+>>> from deeputil.priority_dict import *
+```
+#### Dictionary that can be used as a priority queue.
+Keys of the dictionary are items to be put into the queue, and values
+are their respective priorities. All dictionary methods work as expected.
+The advantage over a standard heapq-based priority queue is
+that priorities of items can be efficiently updated (amortized O(1))
+using code as 'thedict[item] = new_priority.'
+
+The 'smallest' method can be used to return the object with lowest
+priority, and 'pop_smallest' also removes it.
+
+The 'sorted_iter' method provides a destructive sorted iterator.
+
+```
+>>> x = priority_dict({'id1': 22, 'id2': 13, 'id3': 29, 'id4': 25, 'id5': 19})
+>>> x.smallest()
+'id2'
+>>> x.pop_smallest()
+'id2'
+>>> x
+{'id4': 25, 'id5': 19, 'id3': 29, 'id1': 22}
+>>> x = priority_dict({})
+>>> x.smallest()
+Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    File "build/bdist.linux-x86_64/egg/rsslurp/priority_dict.py", line 83, in smallest
+        v, k = heap[0]
+IndexError: list index out of range
+>>> x.pop_smallest()
+Traceback (most recent call last):
+    File "<stdin>", line 1, in <module>
+    File "build/bdist.linux-x86_64/egg/rsslurp/priority_dict.py", line 96, in pop_smallest
+        v, k = heappop(heap)
+IndexError: index out of range
+```
+
