@@ -4,22 +4,13 @@ python:
 install:
 - pip install .
 script:
-- python test.py -v
+    - python setup.py test
 deploy:
   - provider: releases
     skip_cleanup: true
     api-key:
         secure: cYrtu8JP0qar86txe12XvLWesVGO7+fRQWusAO44I/UEO9IReokl7cPoYG9cwN5houjf21/JUS2VW96WY7PCMFPWFqflg7pi1sWFYnSrT8RME2kf+7c+uRFb+aORyof5Iy8H0B/tgDpLsVhnbt9nRbI28gDYQx6epxJH1ZUymJ3CL+qVMNdFEUiow6f2Wz4EuEIi/R1nommsbA/+k5/8Y7bYlUfDpD9k2S0hsE7r/OheXWUWZk2b7F2VhVhyDqtec9QoneTvrHUQgrfkJVmRmwNpYqMqxJMJv6PFmmueQpD/qQP5OBT0R0bsjQ1jk0GYDGfOveQCEVJ6obQcixWg5p/ZPNyPbIfU9gSVEW+vErE5y/9C0tGJiD5ohYqMydELL6tUCDklWmhaMDLWzLLA0zVW83cHGMHLFxuXlR41a++sYkMQdliVaithZBu8d92hgxwOdrfZxskoHH50ABFsGL1AiWRK7gqiZlvEEpCodF0BV3ceyEoDEfV034IY6DbRNF3xZWSZ9Qn3Lc/BKrPu8VxiMf5XMcqE9RXuhEEXpXDWtKtg0KJOud5AEUMO1cc3wfIxKnTXsemudYa6fTmzb0EN+YsyQe2Egy9Yj0WjoRZpZh1OFgnew2mGfwMgYSyc4I0Q3pso1XKt7PFTxTqi91YCNXnYspxnfDsBFNcZqWc=
-    file:
-        - README.md
-        - setup.py
-        - test.py
-        - deeputil/__init__.py
-        - deeputil/misc.py
-        - deeputil/keeprunning.py
-        - deeputil/priority_dict.py
-        - deeputil/streamcounter.py
-        - deeputil/timer.py
+
     name: deeputil-0.1
     tag_name: 0.1
     on:
