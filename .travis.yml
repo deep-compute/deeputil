@@ -5,3 +5,36 @@ install:
 - pip install .
 script:
 - python setup.py test
+deploy:
+  - provider: releases
+    skip_cleanup: true
+    api-key:
+        secure: "cYrtu8JP0qar86txe12XvLWesVGO7+fRQWusAO44I/UEO9IReokl7cPoYG9cwN5houjf21/JUS2VW96WY7PCMFPWFqflg7pi1sWFYnSrT8RME2kf+7c+uRFb+aORyof5Iy8H0B/tgDpLsVhnbt9nRbI28gDYQx6epxJH1ZUymJ3CL+qVMNdFEUiow6f2Wz4EuEIi/R1nommsbA/+k5/8Y7bYlUfDpD9k2S0hsE7r/OheXWUWZk2b7F2VhVhyDqtec9QoneTvrHUQgrfkJVmRmwNpYqMqxJMJv6PFmmueQpD/qQP5OBT0R0bsjQ1jk0GYDGfOveQCEVJ6obQcixWg5p/ZPNyPbIfU9gSVEW+vErE5y/9C0tGJiD5ohYqMydELL6tUCDklWmhaMDLWzLLA0zVW83cHGMHLFxuXlR41a++sYkMQdliVaithZBu8d92hgxwOdrfZxskoHH50ABFsGL1AiWRK7gqiZlvEEpCodF0BV3ceyEoDEfV034IY6DbRNF3xZWSZ9Qn3Lc/BKrPu8VxiMf5XMcqE9RXuhEEXpXDWtKtg0KJOud5AEUMO1cc3wfIxKnTXsemudYa6fTmzb0EN+YsyQe2Egy9Yj0WjoRZpZh1OFgnew2mGfwMgYSyc4I0Q3pso1XKt7PFTxTqi91YCNXnYspxnfDsBFNcZqWc="
+
+    name: deeputil-0.1
+    tag_name: 0.1
+    on:
+        branch: master
+        repo: deep-compute/deeputil
+    # test pypi
+  - provider: pypi
+    distributions: "sdist bdist_wheel"
+    server: https://testpypi.python.org/pypi
+    skip_cleanup: true
+    user: "deepcompute"
+    password:
+      secure: "n7FJn0pqynEEqsePAyiBIWd2NIa2wHRRRmgOX6QteG3W3RA1M3X3oCaLQll/7FGjtaw78/D6K3dk/k8aQF0W8pJr7seiBPsZGtQpMXjPBKh8dk+st6vi9xoV8UrJ46oR6nK89PLG55RECaPp82KP2MKg+qqS126H8B6LCYR3G+b9Nz7b0F6E4AW+VhjMnu75hngNNQt8oP1RuVKXiOStA59GZn9L0iIonZNhezHNqvCuk151x0/dUdcD4s4J1qyoGAWQAut1hrZZJP5mNdAzP40b8IyyHCvHWlGHQZ7P+AHn0Li/00l30uEJ5Qy+CD4TcHM/YQLeSb4bhMRQNvTmI+0G69AELyouV0lOs85lkz5l1XsnqtbzA18Rd2ylGUqro/to/LUdbIyB+udWCRk7r9YA9pbr6Jw8vp9moHti+1wiuwgTnq21IUIVXyV59nb97rfb/ZgDzPU2v54AepAYMm5VlQqCFdtWcFDXeuNIAuQ7cO0w02nFppdh4UMbyw6R14v4NY/VPbJNONr7rZRAV1BRrZ4ati/oMq68g0OL3WnG3t8Nsb2H34SZdRtQjNvNGudQpoyhMFGNBAF5JvbEIUvgknFz6hiFmTiijDLlrupQiJXkRRRX+rlE8xwZos9LJqZfaOyEL2WsEI0WR68A3xM2D8lQ/+qgGe0uaP06pa4="
+    on:
+      branch: master
+      tags: false
+    # pypi
+  - provider: pypi
+    distributions: "sdist bdist_wheel"
+    skip_cleanup: true
+    user: "deepcompute"
+    password:
+      secure: "n7FJn0pqynEEqsePAyiBIWd2NIa2wHRRRmgOX6QteG3W3RA1M3X3oCaLQll/7FGjtaw78/D6K3dk/k8aQF0W8pJr7seiBPsZGtQpMXjPBKh8dk+st6vi9xoV8UrJ46oR6nK89PLG55RECaPp82KP2MKg+qqS126H8B6LCYR3G+b9Nz7b0F6E4AW+VhjMnu75hngNNQt8oP1RuVKXiOStA59GZn9L0iIonZNhezHNqvCuk151x0/dUdcD4s4J1qyoGAWQAut1hrZZJP5mNdAzP40b8IyyHCvHWlGHQZ7P+AHn0Li/00l30uEJ5Qy+CD4TcHM/YQLeSb4bhMRQNvTmI+0G69AELyouV0lOs85lkz5l1XsnqtbzA18Rd2ylGUqro/to/LUdbIyB+udWCRk7r9YA9pbr6Jw8vp9moHti+1wiuwgTnq21IUIVXyV59nb97rfb/ZgDzPU2v54AepAYMm5VlQqCFdtWcFDXeuNIAuQ7cO0w02nFppdh4UMbyw6R14v4NY/VPbJNONr7rZRAV1BRrZ4ati/oMq68g0OL3WnG3t8Nsb2H34SZdRtQjNvNGudQpoyhMFGNBAF5JvbEIUvgknFz6hiFmTiijDLlrupQiJXkRRRX+rlE8xwZos9LJqZfaOyEL2WsEI0WR68A3xM2D8lQ/+qgGe0uaP06pa4="
+    on:
+      branch: master
+      # only when there is a release it will update pypi
+      tags: true

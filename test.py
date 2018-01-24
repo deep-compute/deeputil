@@ -1,10 +1,20 @@
 #!/usr/bin/env python
 
 import doctest
+import unittest
 
 from deeputil import *
 
 #suite = doctest.DocTestSuite(misc)
+
+def suite_maker():
+    suite= unittest.TestSuite()
+    suite.addTests(doctest.DocTestSuite(keeprunning))
+    suite.addTests(doctest.DocTestSuite(misc))
+    suite.addTests(doctest.DocTestSuite(priority_dict))
+    suite.addTests(doctest.DocTestSuite(timer))
+    suite.addTests(doctest.DocTestSuite(streamcounter))
+    return suite
 
 if __name__ == "__main__":
     doctest.testmod(keeprunning)
