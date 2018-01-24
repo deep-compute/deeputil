@@ -11,7 +11,7 @@ Commonly re-used logic
 ```
 from deeputil import *
 ```
-sudo pip install wordvecspace
+sudo pip install deeputil
 ```
 >>> dir(deeputil)
 ['StreamCounter', '__builtins__', '__doc__', '__file__', '__name__', '__package__', '__path__', 'keeprunning', 'misc', 'priority_dict', 'streamcounter', 'timer']
