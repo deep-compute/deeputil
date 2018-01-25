@@ -1,6 +1,11 @@
 from collections import Counter
 
 class StreamCounter(object):
+    '''
+    A class whose responsibility is to get the count of items
+    in data comming as a stream.
+    '''
+
     # When we receive a stream of data, we fix the max size of chunk
     # Think of chunk as a container, which can only fit a fixed no. of items
     # This will help us to keep control over RAM usage
