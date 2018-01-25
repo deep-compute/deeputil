@@ -5,10 +5,8 @@ import unittest
 
 from deeputil import *
 
-#suite = doctest.DocTestSuite(misc)
-
 def suite_maker():
-    suite= unittest.TestSuite()
+    suite = unittest.TestSuite()
     suite.addTests(doctest.DocTestSuite(keeprunning))
     suite.addTests(doctest.DocTestSuite(misc))
     suite.addTests(doctest.DocTestSuite(priority_dict))
