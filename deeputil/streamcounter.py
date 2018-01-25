@@ -49,7 +49,6 @@ class StreamCounter(object):
         '''
         When we receive stream of data, we add them in the chunk
         which has limit on the no. of items that it will store.
-
         >>> s = StreamCounter(5,5)
         >>> data_stream = ['a','b','c','d']
         >>> for item in data_stream:
@@ -114,7 +113,6 @@ class StreamCounter(object):
         is more than the maximum capacity of the chunk. Our intent
         behind is to remove the oldest chunk. So that the items come
         flowing in.
-
         >>> s = StreamCounter(5,5)
         >>> data_stream = ['a','b','c','d']
         >>> for item in data_stream:
@@ -142,6 +140,8 @@ class StreamCounter(object):
 
     def get(self, item, default=0, normalized=False):
         '''
+        When we have the stream of data pushed in the chunk
+        we can retrive count of an item using this method.
         >>> stream_counter_obj = StreamCounter(5,5)
         >>> data_stream = ['a','b','c']
         >>> for item in data_stream:
