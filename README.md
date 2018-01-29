@@ -3,22 +3,22 @@ Commonly re-used logic
 
 ## Installation
 ```
-
+sudo pip install deeputil
 ```
 ## Usage
 
 ## Importing
 ```
-from deeputil import *
+import deeputil
 ```
-sudo pip install deeputil
+
 ```
 >>> dir(deeputil)
-['StreamCounter', '__builtins__', '__doc__', '__file__', '__name__', '__package__', '__path__', 'keeprunning', 'misc', 'priority_dict', 'streamcounter', 'timer']
+['AttrDict', 'BlockTimer', 'Dummy', 'ExpiringCache', 'ExpiringCounter', 'FunctionTimer', 'IterAsFile', 'PriorityDict', 'StreamCounter', '__builtins__', '__doc__', '__file__', '__name__', '__package__', '__path__', 'convert_ts', 'deepgetattr', 'generate_random_string', 'get_datetime', 'get_timestamp', 'keep_running', 'keeprunning', 'misc', 'parse_location', 'priority_dict', 'set_file_limits', 'streamcounter', 'timer', 'xcode']
 ```
 ### deeputil.misc module
 ```
->>> from deeputil.misc import *
+>>> from deeputil import *
 ```
 #### Generating random string of a specified length
 ```
@@ -221,14 +221,14 @@ Now do the same as above but ask Dummy to print the activity
 ````
 ### deeputil.keeprunning module
 ```
->>> from deeputil.keeprunning import *
+>>> from deeputil import keeprunning
 ```
 #### Keeps running a function running even on error.
 
  Example 1: dosomething needs to run until completion condition without needing to have a loop in its code. Also, when error happens, we should NOT terminate execution
  
  ```
->>> from deeputil.misc import AttrDict
+>>> from deeputil import AttrDict
 >>> @keeprunning(wait_secs=1)
 ... def dosomething(state):
 ...     state.i += 1
@@ -335,20 +335,24 @@ STOPPED AT NOTHING!
  ```
 ### deeputil.timer module
 ```
->>> from deeputil.timer
+>>> from deeputil import BlockTimer
 ```
 #### To check execution time of a block of code.
 with Timer() as t:
 `<code>`
 print t.interval
 ```
->>> with Timer.block() as t:
+>>> with BlockTimer() as t:
 ...     time.sleep(1)
 ...
 >>> int(t.interval)
 1
 ```
 #### To check execution time of a function as follows:
+```
+>>> from deeputil import FunctionTimer
+```
+
 ```
 >>> def logger(details, args, kwargs): #some function that uses the time output
 ...     print(details)
@@ -375,11 +379,11 @@ foo executing...
 
 ### deeputil.streamingcounter module
 ```
->>> from deeputil.misc import *
+>>> from deeputil import StreamCounter
 ```
 ### deeputil.priority_dict module
 ```
->>> from deeputil.priority_dict import *
+>>> from deeputil import PriorityDict
 ```
 #### Dictionary that can be used as a priority queue.
 Keys of the dictionary are items to be put into the queue, and values
@@ -394,14 +398,14 @@ priority, and 'pop_smallest' also removes it.
 The 'sorted_iter' method provides a destructive sorted iterator.
 
 ```
->>> x = priority_dict({'id1': 22, 'id2': 13, 'id3': 29, 'id4': 25, 'id5': 19})
+>>> x = PriorityDict({'id1': 22, 'id2': 13, 'id3': 29, 'id4': 25, 'id5': 19})
 >>> x.smallest()
 'id2'
 >>> x.pop_smallest()
 'id2'
 >>> x
 {'id4': 25, 'id5': 19, 'id3': 29, 'id1': 22}
->>> x = priority_dict({})
+>>> x = PriorityDict({})
 >>> x.smallest()
 Traceback (most recent call last):
     File "<stdin>", line 1, in <module>
