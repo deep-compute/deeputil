@@ -5,8 +5,7 @@ class FunctionTimerTerminate(Exception): pass
 def FunctionTimer(on_done=None):
     '''
     # borrowed from https://medium.com/pythonhive/python-decorator-to-measure-the-execution-time-of-methods-fa04cb6bb36d
-    To check execution time of a code.
-    Time blocks of code as follows:
+    To check execution time of a function as follows:
     >>> def logger(details, args, kwargs): #some function that uses the time output
     ...     print(details)
     ... 
@@ -74,8 +73,4 @@ class BlockTimer:
 class Timer(object):
     decorator = staticmethod(FunctionTimer)
     block = BlockTimer
-
-#@Timer.decorator(lambda fn, t: self.log.debug(t))
-#def add(a, b):
-#    return a + b
 

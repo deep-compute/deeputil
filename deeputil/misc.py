@@ -335,7 +335,7 @@ class LineReader(object):
         if self.parts:
             yield ''.join(self.parts)
 
-from priority_dict import priority_dict
+from priority_dict import PriorityDict
 class ExpiringCounter(object):
     '''
     >>> c = ExpiringCounter(duration=1)
@@ -356,7 +356,7 @@ class ExpiringCounter(object):
     def __init__(self, duration=DEFAULT_DURATION):
         self.duration = duration
         self.latest_ts = int(time.time())
-        self.counts = priority_dict()
+        self.counts = PriorityDict()
         self.count = 0
         self.history = {}
 
