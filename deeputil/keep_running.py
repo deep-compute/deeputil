@@ -1,4 +1,5 @@
 import time
+import inspect
 
 class KeepRunningTerminate(Exception): pass
 
@@ -11,7 +12,7 @@ def keeprunning(wait_secs=0, exit_on_success=False,
     # without needing to have a loop in its code. Also, when error
     # happens, we should NOT terminate execution
     
-    >>> from deeputil.misc import AttrDict
+    >>> from deeputil import AttrDict
     >>> @keeprunning(wait_secs=1)
     ... def dosomething(state):
     ...     state.i += 1
@@ -42,8 +43,8 @@ def keeprunning(wait_secs=0, exit_on_success=False,
     # dosomething keeps running, or perform any other action 
     # when an exceptions arise
     
-    >>> def some_error(fn, args, kwargs, exc):
-    ...     print (exc)
+    >>> def some_error(__exc__):
+    ...     print (__exc__)
     ... 
     >>> @keeprunning(on_error=some_error)
     ... def dosomething(state):
@@ -75,54 +76,75 @@ def keeprunning(wait_secs=0, exit_on_success=False,
     Done
     
     
-    # Example 3:Full set of arguments that can be passed in @keeprunning()
+    # Example 3: Full set of arguments that can be passed in @keeprunning()
+    # with class implementations
     
-    >>> def success(fn, args, kwargs):
-    ...     print('yay!!')
-    ... 
-    >>> def failure(fn, args, kwargs, exc):
-    ...     print('fck!', exc)
-    ... 
-    >>> def task_done(fn, args, kwargs):
-    ...     print('STOPPED AT NOTHING!')
-    ... 
-    >>> @keeprunning(wait_secs=1, exit_on_success=False,
+    >>> # Class that has some class variables
+    ... class Demo(object):
+    ...     SUCCESS_MSG = 'Yay!!'
+    ...     DONE_MSG = 'STOPPED AT NOTHING!'
+    ...     ERROR_MSG = 'Error'
+    ...     
+    ...     # Functions to be called by @keeprunning
+    ...     def success(self):
+    ...         print(self.SUCCESS_MSG)
+    ...     
+    ...     def failure(self, __exc__):
+    ...         print(self.ERROR_MSG, __exc__)
+    ...     
+    ...     def task_done(self):
+    ...         print(self.DONE_MSG)
+    ...     
+    ...     #Actual use of keeprunning with all arguments passed
+    ...     @keeprunning(wait_secs=1, exit_on_success=False,
     ...             on_success=success, on_error=failure, on_done=task_done)
-    ... def dosomething(state):
-    ...     state.i += 1
-    ...     print (state)
-    ...     if state.i % 2 == 0:
-    ...         print("Error happened")
-    ...         1 / 0 # create an error condition
-    ...     if state.i >= 7:
-    ...         print ("Done")
-    ...         raise keeprunning.terminate
+    ...     def dosomething(self, state):
+    ...         state.i += 1
+    ...         print (state)
+    ...         if state.i % 2 == 0:
+    ...             print("Error happened")
+    ...             1 / 0 # create an error condition
+    ...         if state.i >= 7:
+    ...             print ("Done")
+    ...             raise keeprunning.terminate
     ... 
+    >>> demo = Demo()
     >>> state = AttrDict(i=0)
-    >>> dosomething(state)
+    >>> demo.dosomething(state)
     AttrDict({'i': 1})
-    yay!!
+    Yay!!
     AttrDict({'i': 2})
     Error happened
-    ('fck!', ZeroDivisionError('integer division or modulo by zero',))
+    ('Error', ZeroDivisionError('integer division or modulo by zero',))
     AttrDict({'i': 3})
-    yay!!
+    Yay!!
     AttrDict({'i': 4})
     Error happened
-    ('fck!', ZeroDivisionError('integer division or modulo by zero',))
+    ('Error', ZeroDivisionError('integer division or modulo by zero',))
     AttrDict({'i': 5})
-    yay!!
+    Yay!!
     AttrDict({'i': 6})
     Error happened
-    ('fck!', ZeroDivisionError('integer division or modulo by zero',))
+    ('Error', ZeroDivisionError('integer division or modulo by zero',))
     AttrDict({'i': 7})
     Done
     STOPPED AT NOTHING!
-    >>> 
+    
     '''
     def decfn(fn):
 
+        def _call_callback(cb, fargs):
+            if not cb: return
+            # get the getargspec fn in inspect module (python 2/3 support)
+            G = getattr(inspect, 'getfullargspec', getattr(inspect, 'getargspec'))
+            cb_args = G(cb).args
+            cb_args = dict([(a, fargs.get(a, None)) for a in cb_args])
+            cb(**cb_args)
+
         def _fn(*args, **kwargs):
+            fargs = inspect.getcallargs(fn, *args, **kwargs)
+            fargs.update(dict(__fn__=fn, __exc__=None))
+
             while 1:
                 try:
                     fn(*args, **kwargs)
@@ -132,20 +154,18 @@ def keeprunning(wait_secs=0, exit_on_success=False,
                 except KeepRunningTerminate:
                     break
                 except Exception, exc:
-                    if on_error:
-                        on_error(fn, args, kwargs, exc)
+                    fargs.update(dict(__exc__=exc))
+                    _call_callback(on_error, fargs)
+                    fargs.update(dict(__exc__=None))
                     if wait_secs: time.sleep(wait_secs)
                     continue
 
-                if on_success:
-                    on_success(fn, args, kwargs)
-                    
-            if on_done:
-                on_done(fn, args, kwargs)
+                _call_callback(on_success, fargs)
+                
+            _call_callback(on_done, fargs)
 
         return _fn
 
     return decfn
 
 keeprunning.terminate = KeepRunningTerminate
-
