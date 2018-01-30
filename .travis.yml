@@ -10,8 +10,8 @@ deploy:
     skip_cleanup: true
     api-key:
       secure: Q3wwYSZkwXAG1DwgKZrR/vZTGLZlDBfR9O5MoZ+dpmy6EmFozQLRB+qFh+eWh2Y8xYIdXz+6CaJLcM92JU5zJTslWLHyhO7kTOt31fxuZu+HGnR835Try6TlU11948nn2Ramk4nI3lT/G4jO+PdNq23sOPdhV4KDI0nv9Pc9Ywqoyg+4okpSnbJNWn7bdinthA88iMRNxqH88LJ4CM6J/eh0qJUm2xcAOTpw9gIkq188UTCbT71qGUWhWFicvbV1oJ6r+C87Ru/rf+nHJyZ7Dn2y8odBx+MHicUp7XomKP/niM2K9TkX/wOMqopE6XrmAnZ/6W/8cGOoqLWT0oqksktIqlOrUYQAq5UNXee3cHPq6k+Q/CGhbGb9feNEzb3PMPKkD6wict90arhHfpqk0yGP1lCRSwM0eIgegMWgSpFXi2Zc+K/6iucZ21ayVDZf20f7Pe70SEgjB/VJiTgI+BMmOG70a2MYsHUG+rK4fYiSDiO+9ADVNHHNy5r9dL+VLhRxkkcgaIkkZsx/xoE2KUO601EOEfjX55S0C8R/VRNDpxg1VXhu2i19E3G08Xcv+xuz8awst3gvVImVJY9j9GiimMtT0l/pLMjWTeAvMmlraxRaMa36Q96BntThdwRkNCAhsfCTF364egRI+PEWciRcrb0Tpj8/L8p2OUMMqgI=
-    name: deeputil-0.1
-    tag_name: 0.1
+    name: deeputil-0.1.1
+    tag_name: 0.1.1
     on:
         branch: master
         repo: deep-compute/deeputil
@@ -22,7 +22,7 @@ deploy:
     skip_cleanup: true
     user: "deepcompute"
     password:
-      secure: "n7FJn0pqynEEqsePAyiBIWd2NIa2wHRRRmgOX6QteG3W3RA1M3X3oCaLQll/7FGjtaw78/D6K3dk/k8aQF0W8pJr7seiBPsZGtQpMXjPBKh8dk+st6vi9xoV8UrJ46oR6nK89PLG55RECaPp82KP2MKg+qqS126H8B6LCYR3G+b9Nz7b0F6E4AW+VhjMnu75hngNNQt8oP1RuVKXiOStA59GZn9L0iIonZNhezHNqvCuk151x0/dUdcD4s4J1qyoGAWQAut1hrZZJP5mNdAzP40b8IyyHCvHWlGHQZ7P+AHn0Li/00l30uEJ5Qy+CD4TcHM/YQLeSb4bhMRQNvTmI+0G69AELyouV0lOs85lkz5l1XsnqtbzA18Rd2ylGUqro/to/LUdbIyB+udWCRk7r9YA9pbr6Jw8vp9moHti+1wiuwgTnq21IUIVXyV59nb97rfb/ZgDzPU2v54AepAYMm5VlQqCFdtWcFDXeuNIAuQ7cO0w02nFppdh4UMbyw6R14v4NY/VPbJNONr7rZRAV1BRrZ4ati/oMq68g0OL3WnG3t8Nsb2H34SZdRtQjNvNGudQpoyhMFGNBAF5JvbEIUvgknFz6hiFmTiijDLlrupQiJXkRRRX+rlE8xwZos9LJqZfaOyEL2WsEI0WR68A3xM2D8lQ/+qgGe0uaP06pa4="
+      secure: "MFFlIb6WGojDdGRgvMBBrt9GOgAuR5HkRSHlNFkqGo3dc9hLLEV0aGORRMw/n/3WkGTN8fNL5kd7Pe4ODCMb1wz02wGQYgDTHHQUy/GYCI4rv3GzLjWw9TeMKLrgXYBvDdD/ESxesmD2jdqjyh/kwhCiOznTjKcbklGDZH/ycC0yxsR3P3tSCDCTagWpLGUF90Iyz+pNspWdrPmV9mmfPplVf1HNo6UhuGhxMtTcxZsRRNF6s3dh/NFFJmdf9Z0qCp9JV3N9/zGgp8aqjGeJ1w/2ULq05zDgR/CkKIDVTyh6woo/BSPKj9cK4Azr61qRycughA0riUmjCm+14FTj/32FBfgoh6xSNV+N4atgCJEMfVBLyM/4Yh226vwGtQdpPC1ouendfxbUPwh5fVlrWAOO2GwfrEtFb/MwMeA7J/QHQ0jKQ/zA9KV2qVOvbKHAr3yd0MxCdgHjvbTve6a0wyZbkUDDdPMBDJNOMlRh/e0tNZnjenH80NjmryrITR0DuY8OvHAr3oA6sFGWE/bLzoe4IHe8GDuJCNYN5elz95tc1ZYbtFVaTvctUmdRg9biLJnf1V9sKVxu896PMhdC5ONbTyoMeaCycanx7Oft2KhjKTwi8rWiQvczDFkXKtr2abCMIt7EL/rGR/w8ohaCyWMzqB+Ax5m23NUxC0bB+B0="
     on:
       branch: master
       tags: false
@@ -32,7 +32,7 @@ deploy:
     skip_cleanup: true
     user: "deepcompute"
     password:
-      secure: "n7FJn0pqynEEqsePAyiBIWd2NIa2wHRRRmgOX6QteG3W3RA1M3X3oCaLQll/7FGjtaw78/D6K3dk/k8aQF0W8pJr7seiBPsZGtQpMXjPBKh8dk+st6vi9xoV8UrJ46oR6nK89PLG55RECaPp82KP2MKg+qqS126H8B6LCYR3G+b9Nz7b0F6E4AW+VhjMnu75hngNNQt8oP1RuVKXiOStA59GZn9L0iIonZNhezHNqvCuk151x0/dUdcD4s4J1qyoGAWQAut1hrZZJP5mNdAzP40b8IyyHCvHWlGHQZ7P+AHn0Li/00l30uEJ5Qy+CD4TcHM/YQLeSb4bhMRQNvTmI+0G69AELyouV0lOs85lkz5l1XsnqtbzA18Rd2ylGUqro/to/LUdbIyB+udWCRk7r9YA9pbr6Jw8vp9moHti+1wiuwgTnq21IUIVXyV59nb97rfb/ZgDzPU2v54AepAYMm5VlQqCFdtWcFDXeuNIAuQ7cO0w02nFppdh4UMbyw6R14v4NY/VPbJNONr7rZRAV1BRrZ4ati/oMq68g0OL3WnG3t8Nsb2H34SZdRtQjNvNGudQpoyhMFGNBAF5JvbEIUvgknFz6hiFmTiijDLlrupQiJXkRRRX+rlE8xwZos9LJqZfaOyEL2WsEI0WR68A3xM2D8lQ/+qgGe0uaP06pa4="
+      secure: "MFFlIb6WGojDdGRgvMBBrt9GOgAuR5HkRSHlNFkqGo3dc9hLLEV0aGORRMw/n/3WkGTN8fNL5kd7Pe4ODCMb1wz02wGQYgDTHHQUy/GYCI4rv3GzLjWw9TeMKLrgXYBvDdD/ESxesmD2jdqjyh/kwhCiOznTjKcbklGDZH/ycC0yxsR3P3tSCDCTagWpLGUF90Iyz+pNspWdrPmV9mmfPplVf1HNo6UhuGhxMtTcxZsRRNF6s3dh/NFFJmdf9Z0qCp9JV3N9/zGgp8aqjGeJ1w/2ULq05zDgR/CkKIDVTyh6woo/BSPKj9cK4Azr61qRycughA0riUmjCm+14FTj/32FBfgoh6xSNV+N4atgCJEMfVBLyM/4Yh226vwGtQdpPC1ouendfxbUPwh5fVlrWAOO2GwfrEtFb/MwMeA7J/QHQ0jKQ/zA9KV2qVOvbKHAr3yd0MxCdgHjvbTve6a0wyZbkUDDdPMBDJNOMlRh/e0tNZnjenH80NjmryrITR0DuY8OvHAr3oA6sFGWE/bLzoe4IHe8GDuJCNYN5elz95tc1ZYbtFVaTvctUmdRg9biLJnf1V9sKVxu896PMhdC5ONbTyoMeaCycanx7Oft2KhjKTwi8rWiQvczDFkXKtr2abCMIt7EL/rGR/w8ohaCyWMzqB+Ax5m23NUxC0bB+B0="
     on:
       branch: master
       # only when there is a release it will update pypi
