@@ -11,13 +11,13 @@ def FunctionTimer(on_done=None):
     ... 
     >>> @FunctionTimer(on_done= logger)
     ... def foo(t=10):
-    ...     print 'foo executing...'
+    ...     print('foo executing...')
     ...     time.sleep(t)
     ... 
     >>> @FunctionTimer(on_done= logger)
     ... def bar(t, n):
     ...     for i in range(n):
-    ...             print 'bar executing...'
+    ...             print('bar executing...')
     ...             time.sleep(1)
     ...     foo(t)
     ... 
@@ -37,8 +37,8 @@ def FunctionTimer(on_done=None):
             if on_done:
                 on_done((fn.__name__,int(te - ts)), args, kwargs)
             else:
-                print '%r  %d sec(s)' % \
-                      (fn.__name__, (te - ts))
+                print(('%r  %d sec(s)' % \
+                      (fn.__name__, (te - ts))))
             return result
 
         return timed
@@ -73,4 +73,5 @@ class BlockTimer:
 class Timer(object):
     decorator = staticmethod(FunctionTimer)
     block = BlockTimer
+
 

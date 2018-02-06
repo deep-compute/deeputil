@@ -1,17 +1,17 @@
 language: python
 python:
-- '2.7'
+- '3.5'
 install:
-- pip install .
+- pip3 install .
 script:
-- python setup.py test
+- python3 setup.py test
 deploy:
   - provider: releases
     skip_cleanup: true
     api-key:
       secure: Q3wwYSZkwXAG1DwgKZrR/vZTGLZlDBfR9O5MoZ+dpmy6EmFozQLRB+qFh+eWh2Y8xYIdXz+6CaJLcM92JU5zJTslWLHyhO7kTOt31fxuZu+HGnR835Try6TlU11948nn2Ramk4nI3lT/G4jO+PdNq23sOPdhV4KDI0nv9Pc9Ywqoyg+4okpSnbJNWn7bdinthA88iMRNxqH88LJ4CM6J/eh0qJUm2xcAOTpw9gIkq188UTCbT71qGUWhWFicvbV1oJ6r+C87Ru/rf+nHJyZ7Dn2y8odBx+MHicUp7XomKP/niM2K9TkX/wOMqopE6XrmAnZ/6W/8cGOoqLWT0oqksktIqlOrUYQAq5UNXee3cHPq6k+Q/CGhbGb9feNEzb3PMPKkD6wict90arhHfpqk0yGP1lCRSwM0eIgegMWgSpFXi2Zc+K/6iucZ21ayVDZf20f7Pe70SEgjB/VJiTgI+BMmOG70a2MYsHUG+rK4fYiSDiO+9ADVNHHNy5r9dL+VLhRxkkcgaIkkZsx/xoE2KUO601EOEfjX55S0C8R/VRNDpxg1VXhu2i19E3G08Xcv+xuz8awst3gvVImVJY9j9GiimMtT0l/pLMjWTeAvMmlraxRaMa36Q96BntThdwRkNCAhsfCTF364egRI+PEWciRcrb0Tpj8/L8p2OUMMqgI=
-    name: deeputil-0.1.2
-    tag_name: 0.1.2
+    name: deeputil-0.2
+    tag_name: 0.2
     on:
         branch: master
         repo: deep-compute/deeputil
