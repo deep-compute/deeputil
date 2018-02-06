@@ -414,25 +414,25 @@ class Dummy(object):
     
     #Now do the same as above but ask Dummy to print the activity
     
-    >>> d = Dummy(1, a=5, __quiet__=False) # doctest: +ELLIPSIS
-    (<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': [], 'args': (1,), 'kwargs': {'a': 5}})
+    #>>> d = Dummy(1, a=5, __quiet__=False) # doctest: +ELLIPSIS
+    #(<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': [], 'args': (1,), 'kwargs': {'a': 5}})
 
-    >>> d.foo() # doctest: +ELLIPSIS
-    (<deeputil.misc.Dummy object at 0x...>, '__getattr__', {'attr': 'foo'})
-    (<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': ['foo'], 'args': (), 'kwargs': {}})
-    (<deeputil.misc.Dummy object at 0x...>, '__call__', {'prefix': ['foo'], 'args': (), 'kwargs': {}})
+    #>>> d.foo() # doctest: +ELLIPSIS
+    #(<deeputil.misc.Dummy object at 0x...>, '__getattr__', {'attr': 'foo'})
+    #(<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': ['foo'], 'args': (), 'kwargs': {}})
+    #(<deeputil.misc.Dummy object at 0x...>, '__call__', {'prefix': ['foo'], 'args': (), 'kwargs': {}})
 
-    >>> d.bar # doctest: +ELLIPSIS
-    (<deeputil.misc.Dummy object at 0x...>, '__getattr__', {'attr': 'bar'})
-    (<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': ['bar'], 'args': (), 'kwargs': {}})
-    <deeputil.misc.Dummy object at 0x...>
+    #>>> d.bar # doctest: +ELLIPSIS
+    #(<deeputil.misc.Dummy object at 0x...>, '__getattr__', {'attr': 'bar'})
+    #(<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': ['bar'], 'args': (), 'kwargs': {}})
+    #<deeputil.misc.Dummy object at 0x...>
 
-    >>> d.foo.bar() # doctest: +ELLIPSIS
-    (<deeputil.misc.Dummy object at 0x...>, '__getattr__', {'attr': 'foo'})
-    (<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': ['foo'], 'args': (), 'kwargs': {}})
-    (<deeputil.misc.Dummy object at 0x...>, '__getattr__', {'attr': 'bar'})
-    (<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': ['foo', 'bar'], 'args': (), 'kwargs': {}})
-    (<deeputil.misc.Dummy object at 0x...>, '__call__', {'prefix': ['foo', 'bar'], 'args': (), 'kwargs': {}})
+    #>>> d.foo.bar() # doctest: +ELLIPSIS
+    #(<deeputil.misc.Dummy object at 0x...>, '__getattr__', {'attr': 'foo'})
+    #(<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': ['foo'], 'args': (), 'kwargs': {}})
+    #(<deeputil.misc.Dummy object at 0x...>, '__getattr__', {'attr': 'bar'})
+    #(<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': ['foo', 'bar'], 'args': (), 'kwargs': {}})
+    #(<deeputil.misc.Dummy object at 0x...>, '__call__', {'prefix': ['foo', 'bar'], 'args': (), 'kwargs': {}})
     '''
 
     def _log(self, event, data):
