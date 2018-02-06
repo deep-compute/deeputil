@@ -46,8 +46,9 @@ class PriorityDict(dict):
     'id2'
     >>> x.pop_smallest()
     'id2'
-    >>> x
-    {'id4': 25, 'id5': 19, 'id3': 29, 'id1': 22}
+    >>> from pprint import pprint
+    >>> pprint(x)
+    {'id1': 22, 'id3': 29, 'id4': 25, 'id5': 19}
     >>> x = PriorityDict({})
     >>> x.smallest()
     Traceback (most recent call last):
@@ -68,7 +69,7 @@ class PriorityDict(dict):
         self._rebuild_heap()
 
     def _rebuild_heap(self):
-        self._heap = [(v, k) for k, v in self.iteritems()]
+        self._heap = [(v, k) for k, v in list(self.items())]
         heapify(self._heap)
 
     def smallest(self):

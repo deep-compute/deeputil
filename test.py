@@ -18,7 +18,7 @@ def suite_maker():
 
 if __name__ == "__main__":
     doctest.testmod(keep_running)
-    doctest.testmod(misc)
+    doctest.testmod(misc, optionflags=doctest.ELLIPSIS)
     doctest.testmod(streamcounter)
     doctest.testmod(timer)
     doctest.testmod(priority_dict)

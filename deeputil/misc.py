@@ -7,6 +7,7 @@ import random
 import string
 
 import binascii
+from functools import reduce
 
 def generate_random_string(length=6):
     '''
@@ -17,10 +18,10 @@ def generate_random_string(length=6):
     
     # Test randomness. Try N times and observe no duplicaton
     >>> N = 100
-    >>> len(set(generate_random_string(10) for i in xrange(N))) == N
+    >>> len(set(generate_random_string(10) for i in range(N))) == N
     True
     '''
-    n = length / 2 + 1
+    n = int(length / 2 + 1)
     x = binascii.hexlify(os.urandom(n))
     return x[:length]
 
@@ -29,7 +30,7 @@ def get_timestamp(dt=None):
     Return current timestamp if @dt is None
     else return timestamp of @dt.
     
-    >>> t = datetime.datetime(2015, 05, 21)
+    >>> t = datetime.datetime(2015, 0o5, 21)
     >>> get_timestamp(t)
     1432166400
     '''
@@ -76,21 +77,18 @@ def convert_ts(tt):
         ts = None
     return ts
 
+#FIXME No unicde in python 3
 def xcode(text, encoding='utf8', mode='ignore'):
     '''
     Converts unicode encoding to str
+    >>> xcode(b'hello')
+    b'hello'
     >>> xcode('hello')
-    'hello'
-    >>> xcode(u'hello')
-    'hello'
+    b'hello'
     '''
-    return text.encode(encoding, mode) if isinstance(text, unicode) else text
+    return text.encode(encoding, mode) if isinstance(text, str) else text
 
-#TODO check for python 3 
-try:
-    from urllib.parse import urlparse
-except ImportError:
-    from urlparse import urlparse
+from urllib.parse import urlparse
 
 def parse_location(loc, default_port):
     '''
@@ -174,7 +172,7 @@ def deepgetattr(obj, attr, default=AttributeError):
     >>> deepgetattr(universe, 'galaxy.solarsystem.planet.name')
     'Earth'
     >>> deepgetattr(universe, 'solarsystem.planet.name', default=TypeError)
-    <type 'exceptions.TypeError'>
+    <class 'TypeError'>
     """
     try:
         return reduce(getattr, attr.split('.'), obj)
@@ -222,13 +220,6 @@ class AttrDict(dict):
     2
     >>> d.b
     2
-    
-    >>> d
-    AttrDict({'a': 1, 'b': 2})
-    
-    >>> repr(d)
-    "AttrDict({'a': 1, 'b': 2})"
-    
     >>> del d['a']
     >>> d
     AttrDict({'b': 2})
@@ -242,7 +233,7 @@ class AttrDict(dict):
         super(AttrDict, self).__init__(*args, **kwargs)
 
     def __getstate__(self):
-        return self.__dict__.items()
+        return list(self.__dict__.items())
 
     def __setstate__(self, items):
         for key, val in items:
@@ -279,7 +270,7 @@ class IterAsFile(object):
     >>> def str_fn():
     ...     for c in 'a', 'b', 'c':
     ...             yield c * 3
-    ...
+    ... 
     >>> IAF = IterAsFile(str_fn())
     >>> IAF.read(6)
     'aaabbb'
@@ -293,7 +284,7 @@ class IterAsFile(object):
       self.next_chunk = ''
 
     def _grow_chunk(self):
-      self.next_chunk = self.next_chunk + self.it.next()
+      self.next_chunk = self.next_chunk + next(self.it)
 
     def read(self, n):
       if self.next_chunk == None:
@@ -335,7 +326,7 @@ class LineReader(object):
         if self.parts:
             yield ''.join(self.parts)
 
-from priority_dict import PriorityDict
+from .priority_dict import PriorityDict
 class ExpiringCounter(object):
     '''
     >>> c = ExpiringCounter(duration=1)
@@ -383,7 +374,7 @@ class ExpiringCounter(object):
         for ts_key in ts_keys:
             hcounts = self.history.pop(ts_key)
 
-            for key, count in hcounts.iteritems():
+            for key, count in list(hcounts.items()):
                 kcount = self.counts[key]
                 kcount -= count
                 if kcount <= 0: del self.counts[key]
@@ -417,24 +408,26 @@ class Dummy(object):
     >>> d = Dummy(1, a=5)
     >>> d.foo()
     
-    >>> d.bar #doctest: +ELLIPSIS
-    <deeputil.misc.Dummy object at 0x...>
+    >>> d.bar() 
     
     >>> d.foo.bar()
     
-     Now do the same as above but ask Dummy to print the activity
+    #Now do the same as above but ask Dummy to print the activity
     
-    >>> d = Dummy(1, a=5, __quiet__=False) #doctest: +ELLIPSIS
+    >>> d = Dummy(1, a=5, __quiet__=False) # doctest: +ELLIPSIS
     (<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': [], 'args': (1,), 'kwargs': {'a': 5}})
-    >>> d.foo() #doctest: +ELLIPSIS
+
+    >>> d.foo() # doctest: +ELLIPSIS
     (<deeputil.misc.Dummy object at 0x...>, '__getattr__', {'attr': 'foo'})
     (<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': ['foo'], 'args': (), 'kwargs': {}})
     (<deeputil.misc.Dummy object at 0x...>, '__call__', {'prefix': ['foo'], 'args': (), 'kwargs': {}})
-    >>> d.bar #doctest: +ELLIPSIS
+
+    >>> d.bar # doctest: +ELLIPSIS
     (<deeputil.misc.Dummy object at 0x...>, '__getattr__', {'attr': 'bar'})
     (<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': ['bar'], 'args': (), 'kwargs': {}})
     <deeputil.misc.Dummy object at 0x...>
-    >>> d.foo.bar() #doctest: +ELLIPSIS
+
+    >>> d.foo.bar() # doctest: +ELLIPSIS
     (<deeputil.misc.Dummy object at 0x...>, '__getattr__', {'attr': 'foo'})
     (<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': ['foo'], 'args': (), 'kwargs': {}})
     (<deeputil.misc.Dummy object at 0x...>, '__getattr__', {'attr': 'bar'})
@@ -444,7 +437,7 @@ class Dummy(object):
 
     def _log(self, event, data):
         if not self._quiet:
-            print(self, event, data)
+            print((self, event, data))
 
     def __init__(self, *args, **kwargs):
         self._prefix = kwargs.pop('__prefix__', [])
@@ -457,4 +450,5 @@ class Dummy(object):
 
     def __call__(self, *args, **kwargs):
         self._log('__call__', dict(args=args, kwargs=kwargs, prefix=self._prefix))
+
 

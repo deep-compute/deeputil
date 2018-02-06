@@ -71,7 +71,7 @@ class StreamCounter(object):
         chunk = self.chunked_counts.pop(chunk_id)
 
         self.n_counts -= len(chunk)
-        for k, v in chunk.iteritems():
+        for k, v in list(chunk.items()):
             self.counts[k] -= v
             self.counts_total -= v
 

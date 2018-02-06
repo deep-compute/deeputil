@@ -63,18 +63,17 @@ def keeprunning(wait_secs=0, exit_on_success=False,
     AttrDict({'i': 1})
     AttrDict({'i': 2})
     Error happened
-    integer division or modulo by zero
+    division by zero
     AttrDict({'i': 3})
     AttrDict({'i': 4})
     Error happened
-    integer division or modulo by zero
+    division by zero
     AttrDict({'i': 5})
     AttrDict({'i': 6})
     Error happened
-    integer division or modulo by zero
+    division by zero
     AttrDict({'i': 7})
     Done
-    
     
     # Example 3: Full set of arguments that can be passed in @keeprunning()
     # with class implementations
@@ -87,13 +86,13 @@ def keeprunning(wait_secs=0, exit_on_success=False,
     ...     
     ...     # Functions to be called by @keeprunning
     ...     def success(self):
-    ...         print(self.SUCCESS_MSG)
+    ...         print((self.SUCCESS_MSG))
     ...     
     ...     def failure(self, __exc__):
-    ...         print(self.ERROR_MSG, __exc__)
+    ...         print((self.ERROR_MSG, __exc__))
     ...     
     ...     def task_done(self):
-    ...         print(self.DONE_MSG)
+    ...         print((self.DONE_MSG))
     ...     
     ...     #Actual use of keeprunning with all arguments passed
     ...     @keeprunning(wait_secs=1, exit_on_success=False,
@@ -115,21 +114,20 @@ def keeprunning(wait_secs=0, exit_on_success=False,
     Yay!!
     AttrDict({'i': 2})
     Error happened
-    ('Error', ZeroDivisionError('integer division or modulo by zero',))
+    ('Error', ZeroDivisionError('division by zero',))
     AttrDict({'i': 3})
     Yay!!
     AttrDict({'i': 4})
     Error happened
-    ('Error', ZeroDivisionError('integer division or modulo by zero',))
+    ('Error', ZeroDivisionError('division by zero',))
     AttrDict({'i': 5})
     Yay!!
     AttrDict({'i': 6})
     Error happened
-    ('Error', ZeroDivisionError('integer division or modulo by zero',))
+    ('Error', ZeroDivisionError('division by zero',))
     AttrDict({'i': 7})
     Done
     STOPPED AT NOTHING!
-    
     '''
     def decfn(fn):
 
@@ -153,7 +151,7 @@ def keeprunning(wait_secs=0, exit_on_success=False,
                     raise
                 except KeepRunningTerminate:
                     break
-                except Exception, exc:
+                except Exception as exc:
                     fargs.update(dict(__exc__=exc))
                     _call_callback(on_error, fargs)
                     fargs.update(dict(__exc__=None))
@@ -169,3 +167,4 @@ def keeprunning(wait_secs=0, exit_on_success=False,
     return decfn
 
 keeprunning.terminate = KeepRunningTerminate
+
