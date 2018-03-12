@@ -1,13 +1,16 @@
 # deeputil
 Commonly re-used logic
 
+## 
 ## Installation
+> Prerequisites: Python3+
 ```
 sudo pip install deeputil
 ```
+
 ## Usage
 
-## Importing
+### Importing
 ```
 import deeputil
 ```
