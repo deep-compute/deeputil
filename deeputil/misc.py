@@ -12,10 +12,10 @@ from functools import reduce
 def generate_random_string(length=6):
     '''
     Returns a random string of a specified length.
-    
+
     >>> len(generate_random_string(length=25))
     25
-    
+
     # Test randomness. Try N times and observe no duplicaton
     >>> N = 100
     >>> len(set(generate_random_string(10) for i in range(N))) == N
@@ -29,7 +29,7 @@ def get_timestamp(dt=None):
     '''
     Return current timestamp if @dt is None
     else return timestamp of @dt.
-    
+
     >>> t = datetime.datetime(2015, 0o5, 21)
     >>> get_timestamp(t)
     1432166400
@@ -56,7 +56,7 @@ def convert_ts(tt):
     >>> tt = time.strptime("23.10.2012", "%d.%m.%Y")
     >>> convert_ts(tt)
     1350950400
-    
+
     # @tt: time.struct_time(tm_year=1513, tm_mon=1, tm_mday=1, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=2, tm_yday=1, tm_isdst=0)
     >>> tt = time.strptime("1.1.1513", "%d.%m.%Y")
     >>> convert_ts(tt)
@@ -187,34 +187,34 @@ class AttrDict(dict):
     A dictionary with attribute-style access. It maps attribute access to
     the real dictionary.
     # from: http://code.activestate.com/recipes/473786-dictionary-with-attribute-style-access/
-    
+
     In a plain old dict, we can store values against keys like this
-    
+
     >>> d = {}
     >>> d['a'] = 10
     >>> d['a']
     10
-    
+
     However, sometimes it is convenient to interact with a dict as
     though it is an object. eg: d.a = 10 and access as d.a. This does
     not work in a dict
-    
+
     >>> d = {}
     >>> d.a = 10
     Traceback (most recent call last):
       File "<stdin>", line 1, in <module>
     AttributeError: 'dict' object has no attribute 'a'
-    
+
     This is where you can use an `AttrDict`
-    
+
     >>> d = AttrDict()
     >>> d.a = 1
     >>> d.a
     1
-    
+
     >>> d
     AttrDict({'a': 1})
-    
+
     >>> d['b'] = 2
     >>> d['b']
     2
@@ -223,7 +223,7 @@ class AttrDict(dict):
     >>> del d['a']
     >>> d
     AttrDict({'b': 2})
-    
+
     >>> dd = d.copy()
     >>> dd
     AttrDict({'b': 2})
@@ -261,16 +261,16 @@ class AttrDict(dict):
 
 class IterAsFile(object):
     '''
-    Wraps an iterator in a file-like API, 
+    Wraps an iterator in a file-like API,
     i.e. if you have a generator producing a list of strings,
     this could make it look like a file.
-    
+
     # http://stackoverflow.com/a/12593795/332313
-    
+
     >>> def str_fn():
     ...     for c in 'a', 'b', 'c':
     ...             yield c * 3
-    ... 
+    ...
     >>> IAF = IterAsFile(str_fn())
     >>> IAF.read(6)
     'aaabbb'
@@ -387,7 +387,7 @@ def set_file_limits(n):
     '''
     Set the limit on number of file descriptors
     that this process can open.
-    
+
     '''
 
     try:
@@ -401,19 +401,19 @@ class Dummy(object):
     Abstraction that creates a dummy object
     that does no-operations on method invocations
     but logs all interactions
-    
+
     # Let us create a dummy object and perform some
     # random operations on it
-    
+
     >>> d = Dummy(1, a=5)
     >>> d.foo()
-    
-    >>> d.bar() 
-    
+
+    >>> d.bar()
+
     >>> d.foo.bar()
-    
+
     #Now do the same as above but ask Dummy to print the activity
-    
+
     #>>> d = Dummy(1, a=5, __quiet__=False) # doctest: +ELLIPSIS
     #(<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': [], 'args': (1,), 'kwargs': {'a': 5}})
 
@@ -445,6 +445,9 @@ class Dummy(object):
         self._log('__init__', dict(args=args, kwargs=kwargs, prefix=self._prefix))
 
     def __getattr__(self, attr):
+        if attr == '__wrapped__':
+            raise AttributeError
+
         self._log('__getattr__', dict(attr=attr))
         return Dummy(__prefix__=self._prefix + [attr], __quiet__=self._quiet)
 
