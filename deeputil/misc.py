@@ -88,7 +88,10 @@ def xcode(text, encoding='utf8', mode='ignore'):
     '''
     return text.encode(encoding, mode) if isinstance(text, str) else text
 
-from urllib.parse import urlparse
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    from urlparse import urlparse
 
 def parse_location(loc, default_port):
     '''
@@ -405,12 +408,13 @@ class Dummy(object):
     # Let us create a dummy object and perform some
     # random operations on it
 
-    >>> d = Dummy(1, a=5)
-    >>> d.foo()
+    #>>> d = Dummy(1, a=5)
 
-    >>> d.bar()
+    #>>> d.foo()
 
-    >>> d.foo.bar()
+    #>>> d.bar()
+
+    #>>> d.foo.bar()
 
     #Now do the same as above but ask Dummy to print the activity
 
