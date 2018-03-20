@@ -453,5 +453,4 @@ class Dummy(object):
 
     def __call__(self, *args, **kwargs):
         self._log('__call__', dict(args=args, kwargs=kwargs, prefix=self._prefix))
-
-
+        return Dummy(__prefix__=self._prefix, __quiet__=self._quiet)
