@@ -3,7 +3,7 @@ from setuptools import find_packages
 
 setup(
     name="deeputil",
-    version="0.2.5",
+    version="0.2.6",
     description="Commonly re-used logic kept in one library",
     keywords="deeputil",
     author="Deep Compute, LLC",
