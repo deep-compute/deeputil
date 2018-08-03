@@ -4,23 +4,24 @@ class FunctionTimerTerminate(Exception): pass
 
 def FunctionTimer(on_done=None):
     '''
-    # borrowed from https://medium.com/pythonhive/python-decorator-to-measure-the-execution-time-of-methods-fa04cb6bb36d
-    To check execution time of a function as follows:
+    To check execution time of a function
+    borrowed from https://medium.com/pythonhive/python-decorator-to-measure-the-execution-time-of-methods-fa04cb6bb36d
+
     >>> def logger(details, args, kwargs): #some function that uses the time output
     ...     print(details)
-    ... 
+    ...
     >>> @FunctionTimer(on_done= logger)
     ... def foo(t=10):
     ...     print('foo executing...')
     ...     time.sleep(t)
-    ... 
+    ...
     >>> @FunctionTimer(on_done= logger)
     ... def bar(t, n):
     ...     for i in range(n):
     ...             print('bar executing...')
     ...             time.sleep(1)
     ...     foo(t)
-    ... 
+    ...
     >>> bar(3,2)
     bar executing...
     bar executing...
@@ -37,8 +38,8 @@ def FunctionTimer(on_done=None):
             if on_done:
                 on_done((fn.__name__,int(te - ts)), args, kwargs)
             else:
-                print(('%r  %d sec(s)' % \
-                      (fn.__name__, (te - ts))))
+                print(('%r  %d sec(s)' % (fn.__name__, (te - ts))))
+
             return result
 
         return timed
@@ -49,12 +50,10 @@ FunctionTimer.terminate = FunctionTimerTerminate
 
 class BlockTimer:
     '''
-    # borrowed from: http://preshing.com/20110924/timing-your-code-using-pythons-with-statement/
     To check execution time of a code.
-    Time blocks of code as follows:
-    with Timer() as t:
-        <code>
-    print t.interval
+    borrowed from:
+    http://preshing.com/20110924/timing-your-code-using-pythons-with-statement/
+
     >>> with Timer.block() as t:
     ...     time.sleep(1)
     ...
@@ -73,5 +72,3 @@ class BlockTimer:
 class Timer(object):
     decorator = staticmethod(FunctionTimer)
     block = BlockTimer
-
-
