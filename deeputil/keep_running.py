@@ -118,17 +118,17 @@ def keeprunning(wait_secs=0, exit_on_success=False,
     Yay!!
     AttrDict({'i': 2})
     Error happened
-    ('Error', ZeroDivisionError('division by zero',))
+    ('Error', ZeroDivisionError('division by zero'))
     AttrDict({'i': 3})
     Yay!!
     AttrDict({'i': 4})
     Error happened
-    ('Error', ZeroDivisionError('division by zero',))
+    ('Error', ZeroDivisionError('division by zero'))
     AttrDict({'i': 5})
     Yay!!
     AttrDict({'i': 6})
     Error happened
-    ('Error', ZeroDivisionError('division by zero',))
+    ('Error', ZeroDivisionError('division by zero'))
     AttrDict({'i': 7})
     Done
     STOPPED AT NOTHING!

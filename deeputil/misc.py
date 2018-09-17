@@ -167,7 +167,7 @@ class ExpiringCache(ExpiringLRUCache):
 
 def serialize_dict_keys(d, prefix=""):
     """returns all the keys in nested a dictionary.
-    >>> serialize_dict_keys({"a": {"b": {"c": 1, "b": 2} } })
+    >>> sorted(serialize_dict_keys({"a": {"b": {"c": 1, "b": 2} } }))
     ['a', 'a.b', 'a.b.b', 'a.b.c']
     """
     keys = []
@@ -192,9 +192,10 @@ def flatten_dict(d,
     '''
     Flattens a nested dictionary
 
+    >>> from pprint import pprint
     >>> d = {"a": {"b": {"c": 1, "b": 2, "__d": 'ignore', "_e": "mark"} } }
     >>> fd = flatten_dict(d)
-    >>> print(fd)
+    >>> pprint(fd)
     {'a.b._e': "'mark'", 'a.b.b': 2, 'a.b.c': 1}
     '''
     items = {}
@@ -487,31 +488,34 @@ class Dummy(object):
     random operations on it
 
     >>> d = Dummy(1, a=5)
-    >>> d.foo()
-    >>> d.bar()
-
-    >>> d.foo.bar()
+    >>> d.foo() # doctest: +ELLIPSIS
+    <deeputil.misc.Dummy object at ...>
+    >>> d.bar() # doctest: +ELLIPSIS
+    <deeputil.misc.Dummy object at ...>
+    >>> d.foo.bar() # doctest: +ELLIPSIS
+    <deeputil.misc.Dummy object at ...>
 
     Now do the same as above but ask Dummy to print the activity
     >>> d = Dummy(1, a=5, __quiet__=False) # doctest: +ELLIPSIS
-    (<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': [], 'args': (1,), 'kwargs': {'a': 5}})
-
+    (<deeputil.misc.Dummy object at ...>, '__init__', {'args': (1,), 'kwargs': {'a': 5}, 'prefix': []})
     >>> d.foo() # doctest: +ELLIPSIS
-    (<deeputil.misc.Dummy object at 0x...>, '__getattr__', {'attr': 'foo'})
-    (<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': ['foo'], 'args': (), 'kwargs': {}})
-    (<deeputil.misc.Dummy object at 0x...>, '__call__', {'prefix': ['foo'], 'args': (), 'kwargs': {}})
-
+    (<deeputil.misc.Dummy object at ...>, '__getattr__', {'attr': 'foo'})
+    (<deeputil.misc.Dummy object at ...>, '__init__', {'args': (), 'kwargs': {}, 'prefix': ['foo']})
+    (<deeputil.misc.Dummy object at ...>, '__call__', {'args': (), 'kwargs': {}, 'prefix': ['foo']})
+    (<deeputil.misc.Dummy object at ...>, '__init__', {'args': (), 'kwargs': {}, 'prefix': ['foo']})
+    <deeputil.misc.Dummy object at ...>
     >>> d.bar # doctest: +ELLIPSIS
-    (<deeputil.misc.Dummy object at 0x...>, '__getattr__', {'attr': 'bar'})
-    (<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': ['bar'], 'args': (), 'kwargs': {}})
-    <deeputil.misc.Dummy object at 0x...>
-
+    (<deeputil.misc.Dummy object at ...>, '__getattr__', {'attr': 'bar'})
+    (<deeputil.misc.Dummy object at ...>, '__init__', {'args': (), 'kwargs': {}, 'prefix': ['bar']})
+    <deeputil.misc.Dummy object at ...>
     >>> d.foo.bar() # doctest: +ELLIPSIS
-    (<deeputil.misc.Dummy object at 0x...>, '__getattr__', {'attr': 'foo'})
-    (<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': ['foo'], 'args': (), 'kwargs': {}})
-    (<deeputil.misc.Dummy object at 0x...>, '__getattr__', {'attr': 'bar'})
-    (<deeputil.misc.Dummy object at 0x...>, '__init__', {'prefix': ['foo', 'bar'], 'args': (), 'kwargs': {}})
-    (<deeputil.misc.Dummy object at 0x...>, '__call__', {'prefix': ['foo', 'bar'], 'args': (), 'kwargs': {}})
+    (<deeputil.misc.Dummy object at ...>, '__getattr__', {'attr': 'foo'})
+    (<deeputil.misc.Dummy object at ...>, '__init__', {'args': (), 'kwargs': {}, 'prefix': ['foo']})
+    (<deeputil.misc.Dummy object at ...>, '__getattr__', {'attr': 'bar'})
+    (<deeputil.misc.Dummy object at ...>, '__init__', {'args': (), 'kwargs': {}, 'prefix': ['foo', 'bar']})
+    (<deeputil.misc.Dummy object at ...>, '__call__', {'args': (), 'kwargs': {}, 'prefix': ['foo', 'bar']})
+    (<deeputil.misc.Dummy object at ...>, '__init__', {'args': (), 'kwargs': {}, 'prefix': ['foo', 'bar']})
+    <deeputil.misc.Dummy object at ...>
     '''
 
     def _log(self, event, data):
