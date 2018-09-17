@@ -13,10 +13,17 @@ setup(
     dependency_links=[
         "https://github.com/deep-compute/deeputil",
     ],
-    install_requires=[
+    classifiers=[
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 2.7",
+        "Environment :: Console",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+    ],
+   install_requires=[
         "repoze.lru",
     ],
     packages=find_packages('.'),
     include_package_data=True,
-    test_suite='test.suite_maker'
+    #test_suite='test.suite_maker'
 )
