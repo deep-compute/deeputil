@@ -3,7 +3,7 @@ from setuptools import find_packages
 
 setup(
     name="deeputil",
-    version="0.2.5",
+    version="0.2.6",
     description="Commonly re-used logic kept in one library",
     keywords="deeputil",
     author="Deep Compute, LLC",
@@ -13,10 +13,17 @@ setup(
     dependency_links=[
         "https://github.com/deep-compute/deeputil",
     ],
-    install_requires=[
+    classifiers=[
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 2.7",
+        "Environment :: Console",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+    ],
+   install_requires=[
         "repoze.lru",
     ],
     packages=find_packages('.'),
     include_package_data=True,
-    test_suite = 'test.suite_maker'
+    test_suite='test.suite_maker'
 )
