@@ -539,3 +539,40 @@ class Dummy(object):
         self._log('__call__', dict(args=args, kwargs=kwargs, prefix=self._prefix))
 
         return Dummy(__prefix__=self._prefix, __quiet__=self._quiet)
+
+def memoize(f):
+    '''
+    From: https://goo.gl/aXt4Qy
+    '''
+    # TODO: Test cases
+    class memodict(dict):
+        __slots__ = ()
+
+        def __missing__(self, key):
+            self[key] = ret = f(key)
+            return ret
+    return memodict().__getitem__
+
+
+@memoize
+def load_object(imp_path):
+    '''
+    Given a python import path, load the object
+    For dynamic imports in a program
+
+    >>> isdir = load_object('os.path.isdir')
+    >>> isdir('/tmp')
+    True
+
+    >>> num = load_object('numbers.Number')
+    >>> isinstance('x', num)
+    False
+    >>> isinstance(777, num)
+    True
+    '''
+    module_name, obj_name = imp_path.split('.', 1)
+    module = __import__(module_name)
+    obj = attrgetter(obj_name)(module)
+
+    return obj
+

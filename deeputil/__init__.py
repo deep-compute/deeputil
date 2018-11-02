@@ -13,5 +13,6 @@ from .misc import ExpiringCache, ExpiringCounter
 from .misc import deepgetattr, AttrDict
 from .misc import IterAsFile, set_file_limits
 from .misc import Dummy
+from .misc import memoize, load_object
 
 from .priority_dict import PriorityDict
