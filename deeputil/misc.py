@@ -7,6 +7,7 @@ import random
 import string
 from six import iteritems as items
 import sys
+from operator import attrgetter
 
 import binascii
 from functools import reduce
@@ -570,6 +571,7 @@ def load_object(imp_path):
     >>> isinstance(777, num)
     True
     '''
+    #TODO: Test case doesn't work because of decorator
     module_name, obj_name = imp_path.split('.', 1)
     module = __import__(module_name)
     obj = attrgetter(obj_name)(module)
