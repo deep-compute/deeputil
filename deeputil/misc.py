@@ -6,6 +6,7 @@ import inspect
 import random
 import string
 from six import iteritems as items
+import sys
 
 import binascii
 from functools import reduce
@@ -24,7 +25,8 @@ def generate_random_string(length=6):
     '''
     n = int(length / 2 + 1)
     x = binascii.hexlify(os.urandom(n))
-    return x[:length]
+    s = x[:length]
+    return s.decode('utf-8')
 
 def get_timestamp(dt=None):
     '''
