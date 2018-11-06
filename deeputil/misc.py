@@ -10,7 +10,7 @@ import sys
 from operator import attrgetter
 
 import binascii
-from functools import reduce
+from functools import reduce, wraps
 
 def generate_random_string(length=6):
     '''
@@ -541,13 +541,45 @@ class Dummy(object):
 
         return Dummy(__prefix__=self._prefix, __quiet__=self._quiet)
 
+
 def memoize(f):
     '''
+    Caches result of a function
     From: https://goo.gl/aXt4Qy
+
+    >>> import time
+    
+    >>> @memoize
+    ... def test(msg):
+    ...     # Processing for result that takes time
+    ...     time.sleep(1)
+    ...     return msg
+    >>>
+    >>> for i in range(5):
+    ...     start = time.time()
+    ...     test('calling memoized function')
+    ...     time_taken = time.time() - start
+    ...     # For first time it takes usual time
+    ...     if i == 0 and time_taken >= 1: print('ok')
+    ...     # Faster from the 2nd time
+    ...     elif i != 0 and time_taken <= 1: print('ok')
+    ...     else: print('NOT ok!')
+    'calling memoized function'
+    ok
+    'calling memoized function'
+    ok
+    'calling memoized function'
+    ok
+    'calling memoized function'
+    ok
+    'calling memoized function'
+    ok
     '''
-    # TODO: Test cases
     class memodict(dict):
-        __slots__ = ()
+
+        @wraps(f)
+        def __getitem__(self, *args):
+            return super(memodict, self).__getitem__(*args)
 
         def __missing__(self, key):
             self[key] = ret = f(key)
@@ -571,7 +603,6 @@ def load_object(imp_path):
     >>> isinstance(777, num)
     True
     '''
-    #TODO: Test case doesn't work because of decorator
     module_name, obj_name = imp_path.split('.', 1)
     module = __import__(module_name)
     obj = attrgetter(obj_name)(module)
