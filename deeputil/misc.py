@@ -7,9 +7,10 @@ import random
 import string
 from six import iteritems as items
 import sys
+from operator import attrgetter
 
 import binascii
-from functools import reduce
+from functools import reduce, wraps
 
 def generate_random_string(length=6):
     '''
@@ -539,3 +540,72 @@ class Dummy(object):
         self._log('__call__', dict(args=args, kwargs=kwargs, prefix=self._prefix))
 
         return Dummy(__prefix__=self._prefix, __quiet__=self._quiet)
+
+
+def memoize(f):
+    '''
+    Caches result of a function
+    From: https://goo.gl/aXt4Qy
+
+    >>> import time
+    
+    >>> @memoize
+    ... def test(msg):
+    ...     # Processing for result that takes time
+    ...     time.sleep(1)
+    ...     return msg
+    >>>
+    >>> for i in range(5):
+    ...     start = time.time()
+    ...     test('calling memoized function')
+    ...     time_taken = time.time() - start
+    ...     # For first time it takes usual time
+    ...     if i == 0 and time_taken >= 1: print('ok')
+    ...     # Faster from the 2nd time
+    ...     elif i != 0 and time_taken <= 1: print('ok')
+    ...     else: print('NOT ok!')
+    'calling memoized function'
+    ok
+    'calling memoized function'
+    ok
+    'calling memoized function'
+    ok
+    'calling memoized function'
+    ok
+    'calling memoized function'
+    ok
+    '''
+    class memodict(dict):
+
+        @wraps(f)
+        def __getitem__(self, *args):
+            return super(memodict, self).__getitem__(*args)
+
+        def __missing__(self, key):
+            self[key] = ret = f(key)
+            return ret
+    return memodict().__getitem__
+
+
+@memoize
+def load_object(imp_path):
+    '''
+    Given a python import path, load the object
+    For dynamic imports in a program
+
+    >>> isdir = load_object('os.path.isdir')
+    >>> isdir('/tmp')
+    True
+
+    >>> num = load_object('numbers.Number')
+    >>> isinstance('x', num)
+    False
+    >>> isinstance(777, num)
+    True
+    '''
+    module_name, obj_name = imp_path.split('.', 1)
+    module = __import__(module_name)
+    obj = attrgetter(obj_name)(module)
+
+    return obj
+
