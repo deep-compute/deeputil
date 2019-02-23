@@ -3,7 +3,7 @@ from setuptools import find_packages
 
 setup(
     name="deeputil",
-    version="0.2.7",
+    version="0.2.8",
     description="Commonly re-used logic kept in one library",
     keywords="deeputil",
     author="Deep Compute, LLC",
@@ -22,6 +22,7 @@ setup(
     ],
    install_requires=[
         "repoze.lru",
+        "six",
     ],
     packages=find_packages('.'),
     include_package_data=True,
