@@ -17,7 +17,7 @@ import deeputil
 
 ```
 >>> dir(deeputil)
-['AttrDict', 'BlockTimer', 'Dummy', 'ExpiringCache', 'ExpiringCounter', 'FunctionTimer', 'IterAsFile', 'PriorityDict', 'StreamCounter', '__builtins__', '__doc__', '__file__', '__name__', '__package__', '__path__', 'convert_ts', 'deepgetattr', 'generate_random_string', 'get_datetime', 'get_timestamp', 'keep_running', 'keeprunning', 'misc', 'parse_location', 'priority_dict', 'set_file_limits', 'streamcounter', 'timer', 'xcode']
+['AttrDict', 'BlockTimer', 'Dummy', 'ExpiringCache', 'ExpiringCounter', 'FunctionTimer', 'IterAsFile', 'PriorityDict', 'StreamCounter', '__builtins__', '__doc__', '__file__', '__name__', '__package__', '__path__', 'convert_ts', 'deepgetattr', 'generate_random_string', 'get_datetime', 'get_timestamp', 'grouper', 'keep_running', 'keeprunning', 'misc', 'parse_location', 'priority_dict', 'set_file_limits', 'streamcounter', 'timer', 'xcode']
 ```
 ### deeputil.misc module
 ```
@@ -72,6 +72,14 @@ datetime.datetime(2015, 5, 21, 6, 12, 52)
 ('localhost', 6379)
 >>> parse_location('http://localhost:8888', 6379)
 ('localhost', 8888)
+```
+
+ #### Iterate over an iterator by chunks
+ ```
+>>> [chunk for chunk in grouper(5, (x for x in range(7)))]
+[(0, 1, 2, 3, 4), (5, 6)]
+>>> [chunk for chunk in grouper(5, (x for x in range(5)))]
+[(0, 1, 2, 3, 4)]
 ```
 
  #### Expiring Cache
