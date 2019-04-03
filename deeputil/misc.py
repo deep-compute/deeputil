@@ -5,6 +5,7 @@ import os
 import inspect
 import random
 import string
+import itertools
 from six import iteritems as items
 import sys
 from operator import attrgetter
@@ -609,3 +610,13 @@ def load_object(imp_path):
 
     return obj
 
+def grouper(n, iterable):
+    '''
+    Iterate over an iterator by chunks
+    '''
+    it = iter(iterable)
+    while True:
+        chunk = tuple(itertools.islice(it, n))
+        if not chunk:
+            return
+        yield chunk
