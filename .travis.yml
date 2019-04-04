@@ -1,6 +1,4 @@
 language: python
-#python:
-#- '3.7.0'
 matrix:
   include:
     - python: 3.7
@@ -14,13 +12,12 @@ deploy:
   - provider: releases
     skip_cleanup: true
     api_key:
-      secure: Q3wwYSZkwXAG1DwgKZrR/vZTGLZlDBfR9O5MoZ+dpmy6EmFozQLRB+qFh+eWh2Y8xYIdXz+6CaJLcM92JU5zJTslWLHyhO7kTOt31fxuZu+HGnR835Try6TlU11948nn2Ramk4nI3lT/G4jO+PdNq23sOPdhV4KDI0nv9Pc9Ywqoyg+4okpSnbJNWn7bdinthA88iMRNxqH88LJ4CM6J/eh0qJUm2xcAOTpw9gIkq188UTCbT71qGUWhWFicvbV1oJ6r+C87Ru/rf+nHJyZ7Dn2y8odBx+MHicUp7XomKP/niM2K9TkX/wOMqopE6XrmAnZ/6W/8cGOoqLWT0oqksktIqlOrUYQAq5UNXee3cHPq6k+Q/CGhbGb9feNEzb3PMPKkD6wict90arhHfpqk0yGP1lCRSwM0eIgegMWgSpFXi2Zc+K/6iucZ21ayVDZf20f7Pe70SEgjB/VJiTgI+BMmOG70a2MYsHUG+rK4fYiSDiO+9ADVNHHNy5r9dL+VLhRxkkcgaIkkZsx/xoE2KUO601EOEfjX55S0C8R/VRNDpxg1VXhu2i19E3G08Xcv+xuz8awst3gvVImVJY9j9GiimMtT0l/pLMjWTeAvMmlraxRaMa36Q96BntThdwRkNCAhsfCTF364egRI+PEWciRcrb0Tpj8/L8p2OUMMqgI=
+      secure: PqFupE3suSbV1g31hzyrAuQ+Z+lf5sM9ujsFHZQLbPSKXEmmlJk7mokxHuhR34Q6XSdmD1hHoMba91sP8PRm16seqhD8b8uYUdPkZk4acFCZfqKm46iJ2J3xXbxesyjbruuAOywh8jiHAygvyQktIuE/X+FEz7IrFjInBEW2kEaa8blVsFpfrzKcKpPDCCLSjuH4OK5IMt/trhi2/XA4LZpZwKOMGWDDQgdTOfnMR1WGxmFBcn4f5soPrg9SrmeGYxl8SkET5glMS92P/FkjHk/cl/JRk3i5piPxzgN81nEQNs9wmflHBkI3p4JZlAi34fqznvtLezuKI+a/VgHLDqjdBZvR8h9bPoffAtWWj48ZDNkN8JnDkusUHO13pp5LG2S+j7/asrh4nlt1YBQEcsStoU7tRYXIb8TxIU9FIWRHLdhtcIxh+3ZJLGTRyzKpDKcpIN98vH9u4R5xtEXykdH39r4Gqq6MsT9YbxZA1y3vqoTVqvF7ine/h7JFmu1N0DaB7l8VK+d2N5n+AJP3wp348L7RU7Oe/orzFbociuMsnQo1xWdRYzMt1AGD2H51e5XA8ci5n19v6hwcJb4pnacnptJy4r3SLAFvWDcgGg9+6iyvT61krLBbY4ZJ3F/xrSCPcFXPkohRsvVQH2kelhjNwCIZYHWJBnh23en1bOQ=
     name: deeputil-0.2.9
     tag_name: 0.2.9
     on:
         branch: master
         repo: deep-compute/deeputil
-    # test pypi
   - provider: pypi
     distributions: "sdist bdist_wheel"
     server: https://test.pypi.org/legacy/
