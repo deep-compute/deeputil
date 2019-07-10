@@ -1,42 +1,43 @@
+before_install:
+- pip3 install black
+deploy:
+- provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: PqFupE3suSbV1g31hzyrAuQ+Z+lf5sM9ujsFHZQLbPSKXEmmlJk7mokxHuhR34Q6XSdmD1hHoMba91sP8PRm16seqhD8b8uYUdPkZk4acFCZfqKm46iJ2J3xXbxesyjbruuAOywh8jiHAygvyQktIuE/X+FEz7IrFjInBEW2kEaa8blVsFpfrzKcKpPDCCLSjuH4OK5IMt/trhi2/XA4LZpZwKOMGWDDQgdTOfnMR1WGxmFBcn4f5soPrg9SrmeGYxl8SkET5glMS92P/FkjHk/cl/JRk3i5piPxzgN81nEQNs9wmflHBkI3p4JZlAi34fqznvtLezuKI+a/VgHLDqjdBZvR8h9bPoffAtWWj48ZDNkN8JnDkusUHO13pp5LG2S+j7/asrh4nlt1YBQEcsStoU7tRYXIb8TxIU9FIWRHLdhtcIxh+3ZJLGTRyzKpDKcpIN98vH9u4R5xtEXykdH39r4Gqq6MsT9YbxZA1y3vqoTVqvF7ine/h7JFmu1N0DaB7l8VK+d2N5n+AJP3wp348L7RU7Oe/orzFbociuMsnQo1xWdRYzMt1AGD2H51e5XA8ci5n19v6hwcJb4pnacnptJy4r3SLAFvWDcgGg9+6iyvT61krLBbY4ZJ3F/xrSCPcFXPkohRsvVQH2kelhjNwCIZYHWJBnh23en1bOQ=
+  name: deeputil-0.2.9
+  tag_name: 0.2.9
+  true:
+    branch: master
+    repo: deep-compute/deeputil
+- provider: pypi
+  distributions: sdist bdist_wheel
+  server: https://test.pypi.org/legacy/
+  skip_cleanup: true
+  user: deepcompute
+  password:
+    secure: MFFlIb6WGojDdGRgvMBBrt9GOgAuR5HkRSHlNFkqGo3dc9hLLEV0aGORRMw/n/3WkGTN8fNL5kd7Pe4ODCMb1wz02wGQYgDTHHQUy/GYCI4rv3GzLjWw9TeMKLrgXYBvDdD/ESxesmD2jdqjyh/kwhCiOznTjKcbklGDZH/ycC0yxsR3P3tSCDCTagWpLGUF90Iyz+pNspWdrPmV9mmfPplVf1HNo6UhuGhxMtTcxZsRRNF6s3dh/NFFJmdf9Z0qCp9JV3N9/zGgp8aqjGeJ1w/2ULq05zDgR/CkKIDVTyh6woo/BSPKj9cK4Azr61qRycughA0riUmjCm+14FTj/32FBfgoh6xSNV+N4atgCJEMfVBLyM/4Yh226vwGtQdpPC1ouendfxbUPwh5fVlrWAOO2GwfrEtFb/MwMeA7J/QHQ0jKQ/zA9KV2qVOvbKHAr3yd0MxCdgHjvbTve6a0wyZbkUDDdPMBDJNOMlRh/e0tNZnjenH80NjmryrITR0DuY8OvHAr3oA6sFGWE/bLzoe4IHe8GDuJCNYN5elz95tc1ZYbtFVaTvctUmdRg9biLJnf1V9sKVxu896PMhdC5ONbTyoMeaCycanx7Oft2KhjKTwi8rWiQvczDFkXKtr2abCMIt7EL/rGR/w8ohaCyWMzqB+Ax5m23NUxC0bB+B0=
+  true:
+    branch: master
+    tags: false
+- provider: pypi
+  distributions: sdist bdist_wheel
+  server: https://upload.pypi.org/legacy/
+  skip_cleanup: true
+  user: deepcompute
+  password:
+    secure: MFFlIb6WGojDdGRgvMBBrt9GOgAuR5HkRSHlNFkqGo3dc9hLLEV0aGORRMw/n/3WkGTN8fNL5kd7Pe4ODCMb1wz02wGQYgDTHHQUy/GYCI4rv3GzLjWw9TeMKLrgXYBvDdD/ESxesmD2jdqjyh/kwhCiOznTjKcbklGDZH/ycC0yxsR3P3tSCDCTagWpLGUF90Iyz+pNspWdrPmV9mmfPplVf1HNo6UhuGhxMtTcxZsRRNF6s3dh/NFFJmdf9Z0qCp9JV3N9/zGgp8aqjGeJ1w/2ULq05zDgR/CkKIDVTyh6woo/BSPKj9cK4Azr61qRycughA0riUmjCm+14FTj/32FBfgoh6xSNV+N4atgCJEMfVBLyM/4Yh226vwGtQdpPC1ouendfxbUPwh5fVlrWAOO2GwfrEtFb/MwMeA7J/QHQ0jKQ/zA9KV2qVOvbKHAr3yd0MxCdgHjvbTve6a0wyZbkUDDdPMBDJNOMlRh/e0tNZnjenH80NjmryrITR0DuY8OvHAr3oA6sFGWE/bLzoe4IHe8GDuJCNYN5elz95tc1ZYbtFVaTvctUmdRg9biLJnf1V9sKVxu896PMhdC5ONbTyoMeaCycanx7Oft2KhjKTwi8rWiQvczDFkXKtr2abCMIt7EL/rGR/w8ohaCyWMzqB+Ax5m23NUxC0bB+B0=
+  true:
+    branch: master
+    tags: true
+install:
+- pip3 install .
 language: python
 matrix:
   include:
-    - python: 3.7
-      dist: xenial
-      sudo: true
-install:
-- pip3 install .
+  - dist: xenial
+    python: 3.7
+    sudo: true
 script:
+- black --check .
 - python3 setup.py test
-deploy:
-  - provider: releases
-    skip_cleanup: true
-    api_key:
-      secure: PqFupE3suSbV1g31hzyrAuQ+Z+lf5sM9ujsFHZQLbPSKXEmmlJk7mokxHuhR34Q6XSdmD1hHoMba91sP8PRm16seqhD8b8uYUdPkZk4acFCZfqKm46iJ2J3xXbxesyjbruuAOywh8jiHAygvyQktIuE/X+FEz7IrFjInBEW2kEaa8blVsFpfrzKcKpPDCCLSjuH4OK5IMt/trhi2/XA4LZpZwKOMGWDDQgdTOfnMR1WGxmFBcn4f5soPrg9SrmeGYxl8SkET5glMS92P/FkjHk/cl/JRk3i5piPxzgN81nEQNs9wmflHBkI3p4JZlAi34fqznvtLezuKI+a/VgHLDqjdBZvR8h9bPoffAtWWj48ZDNkN8JnDkusUHO13pp5LG2S+j7/asrh4nlt1YBQEcsStoU7tRYXIb8TxIU9FIWRHLdhtcIxh+3ZJLGTRyzKpDKcpIN98vH9u4R5xtEXykdH39r4Gqq6MsT9YbxZA1y3vqoTVqvF7ine/h7JFmu1N0DaB7l8VK+d2N5n+AJP3wp348L7RU7Oe/orzFbociuMsnQo1xWdRYzMt1AGD2H51e5XA8ci5n19v6hwcJb4pnacnptJy4r3SLAFvWDcgGg9+6iyvT61krLBbY4ZJ3F/xrSCPcFXPkohRsvVQH2kelhjNwCIZYHWJBnh23en1bOQ=
-    name: deeputil-0.2.9
-    tag_name: 0.2.9
-    on:
-        branch: master
-        repo: deep-compute/deeputil
-  - provider: pypi
-    distributions: "sdist bdist_wheel"
-    server: https://test.pypi.org/legacy/
-    skip_cleanup: true
-    user: "deepcompute"
-    password:
-      secure: "MFFlIb6WGojDdGRgvMBBrt9GOgAuR5HkRSHlNFkqGo3dc9hLLEV0aGORRMw/n/3WkGTN8fNL5kd7Pe4ODCMb1wz02wGQYgDTHHQUy/GYCI4rv3GzLjWw9TeMKLrgXYBvDdD/ESxesmD2jdqjyh/kwhCiOznTjKcbklGDZH/ycC0yxsR3P3tSCDCTagWpLGUF90Iyz+pNspWdrPmV9mmfPplVf1HNo6UhuGhxMtTcxZsRRNF6s3dh/NFFJmdf9Z0qCp9JV3N9/zGgp8aqjGeJ1w/2ULq05zDgR/CkKIDVTyh6woo/BSPKj9cK4Azr61qRycughA0riUmjCm+14FTj/32FBfgoh6xSNV+N4atgCJEMfVBLyM/4Yh226vwGtQdpPC1ouendfxbUPwh5fVlrWAOO2GwfrEtFb/MwMeA7J/QHQ0jKQ/zA9KV2qVOvbKHAr3yd0MxCdgHjvbTve6a0wyZbkUDDdPMBDJNOMlRh/e0tNZnjenH80NjmryrITR0DuY8OvHAr3oA6sFGWE/bLzoe4IHe8GDuJCNYN5elz95tc1ZYbtFVaTvctUmdRg9biLJnf1V9sKVxu896PMhdC5ONbTyoMeaCycanx7Oft2KhjKTwi8rWiQvczDFkXKtr2abCMIt7EL/rGR/w8ohaCyWMzqB+Ax5m23NUxC0bB+B0="
-    on:
-      branch: master
-      tags: false
-    # pypi
-  - provider: pypi
-    distributions: "sdist bdist_wheel"
-    server: https://upload.pypi.org/legacy/
-    skip_cleanup: true
-    user: "deepcompute"
-    password:
-      secure: "MFFlIb6WGojDdGRgvMBBrt9GOgAuR5HkRSHlNFkqGo3dc9hLLEV0aGORRMw/n/3WkGTN8fNL5kd7Pe4ODCMb1wz02wGQYgDTHHQUy/GYCI4rv3GzLjWw9TeMKLrgXYBvDdD/ESxesmD2jdqjyh/kwhCiOznTjKcbklGDZH/ycC0yxsR3P3tSCDCTagWpLGUF90Iyz+pNspWdrPmV9mmfPplVf1HNo6UhuGhxMtTcxZsRRNF6s3dh/NFFJmdf9Z0qCp9JV3N9/zGgp8aqjGeJ1w/2ULq05zDgR/CkKIDVTyh6woo/BSPKj9cK4Azr61qRycughA0riUmjCm+14FTj/32FBfgoh6xSNV+N4atgCJEMfVBLyM/4Yh226vwGtQdpPC1ouendfxbUPwh5fVlrWAOO2GwfrEtFb/MwMeA7J/QHQ0jKQ/zA9KV2qVOvbKHAr3yd0MxCdgHjvbTve6a0wyZbkUDDdPMBDJNOMlRh/e0tNZnjenH80NjmryrITR0DuY8OvHAr3oA6sFGWE/bLzoe4IHe8GDuJCNYN5elz95tc1ZYbtFVaTvctUmdRg9biLJnf1V9sKVxu896PMhdC5ONbTyoMeaCycanx7Oft2KhjKTwi8rWiQvczDFkXKtr2abCMIt7EL/rGR/w8ohaCyWMzqB+Ax5m23NUxC0bB+B0="
-    on:
-      branch: master
-      # only when there is a release it will update pypi
-      tags: true
