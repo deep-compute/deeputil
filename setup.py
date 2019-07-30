@@ -9,10 +9,8 @@ setup(
     author="Deep Compute, LLC",
     author_email="contact@deepcompute.com",
     url="https://github.com/deep-compute/deeputil",
-    license='MIT',
-    dependency_links=[
-        "https://github.com/deep-compute/deeputil",
-    ],
+    license="MIT",
+    dependency_links=["https://github.com/deep-compute/deeputil"],
     classifiers=[
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 2.7",
@@ -20,11 +18,8 @@ setup(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
     ],
-   install_requires=[
-        "repoze.lru",
-        "six",
-    ],
-    packages=find_packages('.'),
+    install_requires=["repoze.lru", "six"],
+    packages=find_packages("."),
     include_package_data=True,
-    test_suite='test.suite_maker'
+    test_suite="test.suite_maker",
 )

@@ -1,11 +1,13 @@
 from collections import Counter
 
+
 class StreamCounter(object):
-    '''
+    """
     A class whose responsibility is to get the count of items
     in data comming as a stream.
-    '''
-    #TODO Doctests and examples	
+    """
+
+    # TODO Doctests and examples
     # When we receive a stream of data, we fix the max size of chunk
     # Think of chunk as a container, which can only fit a fixed no. of items
     # This will help us to keep control over RAM usage
@@ -14,8 +16,7 @@ class StreamCounter(object):
     # Max count will be maximum occurence of an item
     DEFAULT_MAX_COUNTS = 1000000
 
-    def __init__(self, chunk_size=DEFAULT_CHUNK_SIZE,
-        max_counts=DEFAULT_MAX_COUNTS):
+    def __init__(self, chunk_size=DEFAULT_CHUNK_SIZE, max_counts=DEFAULT_MAX_COUNTS):
 
         self.chunk_size = chunk_size
         self.max_counts = max_counts
@@ -45,7 +46,7 @@ class StreamCounter(object):
         self.counts_total = 0
 
     def add(self, item, count=1):
-        '''
+        """
         When we receive stream of data, we add them in the chunk
         which has limit on the no. of items that it will store.
         >>> s = StreamCounter(5,5)
@@ -78,7 +79,7 @@ class StreamCounter(object):
         2
         >>> s.chunked_counts.get(s.n_chunks, {})
         {'g': 1, 'e': 1}
-        '''
+        """
         self.n_items_seen += count
         self.n_chunk_items_seen += count
 
@@ -105,7 +106,7 @@ class StreamCounter(object):
             self._drop_oldest_chunk()
 
     def _drop_oldest_chunk(self):
-        '''
+        """
         To handle the case when the items comming in the chunk
         is more than the maximum capacity of the chunk. Our intent
         behind is to remove the oldest chunk. So that the items come
@@ -125,7 +126,7 @@ class StreamCounter(object):
         2
         >>> s.chunked_counts
         {2: {'f': 1}}
-        '''
+        """
         chunk_id = min(self.chunked_counts.keys())
         chunk = self.chunked_counts.pop(chunk_id)
 
@@ -135,7 +136,7 @@ class StreamCounter(object):
             self.counts_total -= v
 
     def get(self, item, default=0, normalized=False):
-        '''
+        """
         When we have the stream of data pushed in the chunk
         we can retrive count of an item using this method.
         >>> stream_counter_obj = StreamCounter(5,5)
@@ -165,7 +166,7 @@ class StreamCounter(object):
         1
         >>> stream_counter_obj.get('f')
         1
-        '''
+        """
         c = self.counts.get(item, default)
         if not normalized:
             return c

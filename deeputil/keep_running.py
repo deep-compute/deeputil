@@ -1,15 +1,18 @@
-'''Keeps running a function running even on error
-'''
+"""Keeps running a function running even on error
+"""
 
 import time
 import inspect
 
+
 class KeepRunningTerminate(Exception):
     pass
 
-def keeprunning(wait_secs=0, exit_on_success=False,
-                on_success=None, on_error=None, on_done=None):
-    '''
+
+def keeprunning(
+    wait_secs=0, exit_on_success=False, on_success=None, on_error=None, on_done=None
+):
+    """
     Example 1: dosomething needs to run until completion condition
     without needing to have a loop in its code. Also, when error
     happens, we should NOT terminate execution
@@ -132,13 +135,14 @@ def keeprunning(wait_secs=0, exit_on_success=False,
     AttrDict({'i': 7})
     Done
     STOPPED AT NOTHING!
-    '''
-    def decfn(fn):
+    """
 
+    def decfn(fn):
         def _call_callback(cb, fargs):
-            if not cb: return
+            if not cb:
+                return
             # get the getargspec fn in inspect module (python 2/3 support)
-            G = getattr(inspect, 'getfullargspec', getattr(inspect, 'getargspec'))
+            G = getattr(inspect, "getfullargspec", getattr(inspect, "getargspec"))
             cb_args = G(cb).args
             cb_args = dict([(a, fargs.get(a, None)) for a in cb_args])
             cb(**cb_args)
@@ -150,7 +154,8 @@ def keeprunning(wait_secs=0, exit_on_success=False,
             while 1:
                 try:
                     fn(*args, **kwargs)
-                    if exit_on_success: break
+                    if exit_on_success:
+                        break
                 except (SystemExit, KeyboardInterrupt):
                     raise
                 except KeepRunningTerminate:
@@ -159,7 +164,8 @@ def keeprunning(wait_secs=0, exit_on_success=False,
                     fargs.update(dict(__exc__=exc))
                     _call_callback(on_error, fargs)
                     fargs.update(dict(__exc__=None))
-                    if wait_secs: time.sleep(wait_secs)
+                    if wait_secs:
+                        time.sleep(wait_secs)
                     continue
 
                 _call_callback(on_success, fargs)
@@ -170,5 +176,5 @@ def keeprunning(wait_secs=0, exit_on_success=False,
 
     return decfn
 
-keeprunning.terminate = KeepRunningTerminate
 
+keeprunning.terminate = KeepRunningTerminate

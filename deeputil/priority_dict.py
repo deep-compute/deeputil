@@ -1,4 +1,4 @@
-'''
+"""
 This is free and unencumbered software released into the public domain.
 
 Anyone is free to copy, modify, publish, use, compile, sell, or
@@ -24,9 +24,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <http://unlicense.org/>
 By Matteo Dell'Amico
-'''
+"""
 
 from heapq import heapify, heappush, heappop
+
 
 class PriorityDict(dict):
     """Dictionary that can be used as a priority queue.
@@ -135,4 +136,3 @@ class PriorityDict(dict):
 
         while self:
             yield self.pop_smallest()
-
