@@ -13,8 +13,9 @@ from operator import attrgetter
 import binascii
 from functools import reduce, wraps
 
+
 def generate_random_string(length=6):
-    '''
+    """
     Returns a random string of a specified length.
 
     >>> len(generate_random_string(length=25))
@@ -24,42 +25,46 @@ def generate_random_string(length=6):
     >>> N = 100
     >>> len(set(generate_random_string(10) for i in range(N))) == N
     True
-    '''
+    """
     n = int(length / 2 + 1)
     x = binascii.hexlify(os.urandom(n))
     s = x[:length]
-    return s.decode('utf-8')
+    return s.decode("utf-8")
+
 
 def get_timestamp(dt=None):
-    '''
+    """
     Return current timestamp if @dt is None
     else return timestamp of @dt.
 
     >>> t = datetime.datetime(2015, 0o5, 21)
     >>> get_timestamp(t)
     1432166400
-    '''
+    """
 
-    if dt is None: dt = datetime.datetime.utcnow()
+    if dt is None:
+        dt = datetime.datetime.utcnow()
     t = dt.utctimetuple()
 
     return calendar.timegm(t)
 
+
 def get_datetime(epoch):
-    '''
+    """
     get datetime from an epoch timestamp
 
     >>> get_datetime(1432188772)
     datetime.datetime(2015, 5, 21, 6, 12, 52)
-    '''
+    """
 
     t = time.gmtime(epoch)
     dt = datetime.datetime(*t[:6])
 
     return dt
 
+
 def convert_ts(tt):
-    '''
+    """
     tt: time.struct_time(tm_year=2012, tm_mon=10, tm_mday=23, tm_hour=0,
     tm_min=0, tm_sec=0, tm_wday=1, tm_yday=297, tm_isdst=-1)
 
@@ -75,30 +80,32 @@ def convert_ts(tt):
     0
     >>> tt = 12
     >>> convert_ts(tt)
-    '''
+    """
     try:
         ts = calendar.timegm(tt)
 
-        '''
+        """
         As from the github issue https://github.com/prashanthellina/rsslurp/issues/680,
         there are some cases where we might get timestamp in negative values, so consider
         0 if the converted timestamp is negative value.
-        '''
-        if ts < 0: ts = 0
+        """
+        if ts < 0:
+            ts = 0
     except TypeError:
         ts = None
     return ts
 
-#FIXME No unicode in python 3
-def xcode(text, encoding='utf8', mode='ignore'):
-    '''
+
+# FIXME No unicode in python 3
+def xcode(text, encoding="utf8", mode="ignore"):
+    """
     Converts unicode encoding to str
 
     >>> xcode(b'hello')
     b'hello'
     >>> xcode('hello')
     b'hello'
-    '''
+    """
     return text.encode(encoding, mode) if isinstance(text, str) else text
 
 
@@ -108,8 +115,9 @@ try:
 except ImportError:
     from urlparse import urlparse
 
+
 def parse_location(loc, default_port):
-    '''
+    """
     loc can be of the format http://<ip/domain>[:<port>]
     eg:
         http://localhost:8888
@@ -119,12 +127,12 @@ def parse_location(loc, default_port):
     ('localhost', 6379)
     >>> parse_location('http://localhost:8888', 6379)
     ('localhost', 8888)
-    '''
+    """
 
     parsed = urlparse(loc)
 
-    if ':' in parsed.netloc:
-        ip, port = parsed.netloc.split(':')
+    if ":" in parsed.netloc:
+        ip, port = parsed.netloc.split(":")
         port = int(port)
     else:
         ip, port = parsed.netloc, default_port
@@ -133,8 +141,10 @@ def parse_location(loc, default_port):
 
 
 from repoze.lru import ExpiringLRUCache
+
+
 class ExpiringCache(ExpiringLRUCache):
-    '''
+    """
     Return value for key. If not in cache or expired, return default
 
     >>> c = ExpiringCache(10, default_timeout=1)
@@ -143,7 +153,7 @@ class ExpiringCache(ExpiringLRUCache):
     100
     >>> time.sleep(1)
     >>> c.get('a')
-    '''
+    """
 
     def get(self, key, default=None):
         self.lookups += 1
@@ -169,6 +179,7 @@ class ExpiringCache(ExpiringLRUCache):
 
             return default
 
+
 def serialize_dict_keys(d, prefix=""):
     """returns all the keys in nested a dictionary.
     >>> sorted(serialize_dict_keys({"a": {"b": {"c": 1, "b": 2} } }))
@@ -176,7 +187,7 @@ def serialize_dict_keys(d, prefix=""):
     """
     keys = []
     for k, v in d.items():
-        fqk = '{}{}'.format(prefix, k)
+        fqk = "{}{}".format(prefix, k)
         keys.append(fqk)
         if isinstance(v, dict):
             keys.extend(serialize_dict_keys(v, prefix="{}.".format(fqk)))
@@ -186,14 +197,15 @@ def serialize_dict_keys(d, prefix=""):
 
 import collections
 
+
 class MarkValue(str):
     pass
 
-def flatten_dict(d,
-                 parent_key='', sep='.',
-                 ignore_under_prefixed=True,
-                 mark_value=True):
-    '''
+
+def flatten_dict(
+    d, parent_key="", sep=".", ignore_under_prefixed=True, mark_value=True
+):
+    """
     Flattens a nested dictionary
 
     >>> from pprint import pprint
@@ -201,24 +213,27 @@ def flatten_dict(d,
     >>> fd = flatten_dict(d)
     >>> pprint(fd)
     {'a.b._e': "'mark'", 'a.b.b': 2, 'a.b.c': 1}
-    '''
+    """
     items = {}
     for k in d:
-        if ignore_under_prefixed and k.startswith('__'): continue
+        if ignore_under_prefixed and k.startswith("__"):
+            continue
         v = d[k]
-        if mark_value and k.startswith('_') and not k.startswith('__'):
+        if mark_value and k.startswith("_") and not k.startswith("__"):
             v = MarkValue(repr(v))
 
         new_key = sep.join((parent_key, k)) if parent_key else k
         if isinstance(v, collections.MutableMapping):
-            items.update(flatten_dict(v, new_key, sep=sep,
-                                        ignore_under_prefixed=True,
-                                        mark_value=True)
-                            )
+            items.update(
+                flatten_dict(
+                    v, new_key, sep=sep, ignore_under_prefixed=True, mark_value=True
+                )
+            )
         else:
             items[new_key] = v
 
     return items
+
 
 def deepgetattr(obj, attr, default=AttributeError):
     """
@@ -252,7 +267,7 @@ def deepgetattr(obj, attr, default=AttributeError):
     <class 'TypeError'>
     """
     try:
-        return reduce(getattr, attr.split('.'), obj)
+        return reduce(getattr, attr.split("."), obj)
     except AttributeError:
         if default is not AttributeError:
             return default
@@ -260,7 +275,7 @@ def deepgetattr(obj, attr, default=AttributeError):
 
 
 class AttrDict(dict):
-    '''
+    """
     A dictionary with attribute-style access. It maps attribute access to
     the real dictionary.
     from: http://code.activestate.com/recipes/473786-dictionary-with-attribute-style-access/
@@ -304,7 +319,7 @@ class AttrDict(dict):
     >>> dd = d.copy()
     >>> dd
     AttrDict({'b': 2})
-    '''
+    """
 
     def __init__(self, *args, **kwargs):
         super(AttrDict, self).__init__(*args, **kwargs)
@@ -319,7 +334,7 @@ class AttrDict(dict):
 
     def __repr__(self):
 
-        return '{}({})'.format(self.__class__.__name__, dict.__repr__(self))
+        return "{}({})".format(self.__class__.__name__, dict.__repr__(self))
 
     def __setitem__(self, key, value):
 
@@ -341,8 +356,9 @@ class AttrDict(dict):
         ch = AttrDict(self)
         return ch
 
+
 class IterAsFile(object):
-    '''
+    """
     Wraps an iterator in a file-like API,
     i.e. if you have a generator producing a list of strings,
     this could make it look like a file.
@@ -358,37 +374,38 @@ class IterAsFile(object):
     >>> IAF.read(4)
     'ccc'
     >>> IAF.read(2)
-    '''
+    """
 
     def __init__(self, it):
-      self.it = it
-      self.next_chunk = ''
+        self.it = it
+        self.next_chunk = ""
 
     def _grow_chunk(self):
-      self.next_chunk = self.next_chunk + next(self.it)
+        self.next_chunk = self.next_chunk + next(self.it)
 
     def read(self, n):
-      if self.next_chunk == None:
+        if self.next_chunk == None:
 
-          return None
+            return None
 
-      try:
-          while len(self.next_chunk) < n:
-            self._grow_chunk()
+        try:
+            while len(self.next_chunk) < n:
+                self._grow_chunk()
 
-          rv = self.next_chunk[:n]
-          self.next_chunk = self.next_chunk[n:]
+            rv = self.next_chunk[:n]
+            self.next_chunk = self.next_chunk[n:]
 
-          return rv
+            return rv
 
-      except StopIteration:
-          rv = self.next_chunk
-          self.next_chunk = None
+        except StopIteration:
+            rv = self.next_chunk
+            self.next_chunk = None
 
-          return rv
+            return rv
+
 
 class LineReader(object):
-    def __init__(self, it, linesep='\n'):
+    def __init__(self, it, linesep="\n"):
         self.parts = []
         self.it = it
         self.linesep = linesep
@@ -403,18 +420,19 @@ class LineReader(object):
                     break
 
                 else:
-                    yield ''.join(self.parts) + chunk[loc:end_loc+1]
+                    yield "".join(self.parts) + chunk[loc : end_loc + 1]
                     self.parts = []
                     loc = end_loc + 1
 
         if self.parts:
-            yield ''.join(self.parts)
+            yield "".join(self.parts)
 
 
 from .priority_dict import PriorityDict
 
+
 class ExpiringCounter(object):
-    '''
+    """
     >>> c = ExpiringCounter(duration=1)
     >>> c.put('name')
     >>> c.get('name')
@@ -426,9 +444,9 @@ class ExpiringCounter(object):
     >>> c.put('name')
     >>> c.get('name')
     2
-    '''
+    """
 
-    DEFAULT_DURATION = 60 #seconds
+    DEFAULT_DURATION = 60  # seconds
 
     def __init__(self, duration=DEFAULT_DURATION):
         self.duration = duration
@@ -463,19 +481,23 @@ class ExpiringCounter(object):
             for key, count in list(hcounts.items()):
                 kcount = self.counts[key]
                 kcount -= count
-                if kcount <= 0: del self.counts[key]
-                else: self.counts[key] = kcount
+                if kcount <= 0:
+                    del self.counts[key]
+                else:
+                    self.counts[key] = kcount
                 self.count -= count
 
-#TODO Examples and Readme.md
+
+# TODO Examples and Readme.md
 import resource
 
+
 def set_file_limits(n):
-    '''
+    """
     Set the limit on number of file descriptors
     that this process can open.
 
-    '''
+    """
 
     try:
         resource.setrlimit(resource.RLIMIT_NOFILE, (n, n))
@@ -483,8 +505,9 @@ def set_file_limits(n):
     except ValueError:
         return False
 
+
 class Dummy(object):
-    '''
+    """
     Abstraction that creates a dummy object
     that does no-operations on method invocations
     but logs all interactions
@@ -520,31 +543,33 @@ class Dummy(object):
     (<deeputil.misc.Dummy object at ...>, '__call__', {'args': (), 'kwargs': {}, 'prefix': ['foo', 'bar']})
     (<deeputil.misc.Dummy object at ...>, '__init__', {'args': (), 'kwargs': {}, 'prefix': ['foo', 'bar']})
     <deeputil.misc.Dummy object at ...>
-    '''
+    """
 
     def _log(self, event, data):
-        if not self._quiet: print((self, event, data))
+        if not self._quiet:
+            print((self, event, data))
 
     def __init__(self, *args, **kwargs):
-        self._prefix = kwargs.pop('__prefix__', [])
-        self._quiet = kwargs.pop('__quiet__', True)
-        self._log('__init__', dict(args=args, kwargs=kwargs, prefix=self._prefix))
+        self._prefix = kwargs.pop("__prefix__", [])
+        self._quiet = kwargs.pop("__quiet__", True)
+        self._log("__init__", dict(args=args, kwargs=kwargs, prefix=self._prefix))
 
     def __getattr__(self, attr):
-        if attr == '__wrapped__': raise AttributeError
+        if attr == "__wrapped__":
+            raise AttributeError
 
-        self._log('__getattr__', dict(attr=attr))
+        self._log("__getattr__", dict(attr=attr))
 
         return Dummy(__prefix__=self._prefix + [attr], __quiet__=self._quiet)
 
     def __call__(self, *args, **kwargs):
-        self._log('__call__', dict(args=args, kwargs=kwargs, prefix=self._prefix))
+        self._log("__call__", dict(args=args, kwargs=kwargs, prefix=self._prefix))
 
         return Dummy(__prefix__=self._prefix, __quiet__=self._quiet)
 
 
 def memoize(f):
-    '''
+    """
     Caches result of a function
     From: https://goo.gl/aXt4Qy
 
@@ -575,9 +600,9 @@ def memoize(f):
     ok
     'calling memoized function'
     ok
-    '''
-    class memodict(dict):
+    """
 
+    class memodict(dict):
         @wraps(f)
         def __getitem__(self, *args):
             return super(memodict, self).__getitem__(*args)
@@ -585,12 +610,13 @@ def memoize(f):
         def __missing__(self, key):
             self[key] = ret = f(key)
             return ret
+
     return memodict().__getitem__
 
 
 @memoize
 def load_object(imp_path):
-    '''
+    """
     Given a python import path, load the object
     For dynamic imports in a program
 
@@ -603,17 +629,18 @@ def load_object(imp_path):
     False
     >>> isinstance(777, num)
     True
-    '''
-    module_name, obj_name = imp_path.split('.', 1)
+    """
+    module_name, obj_name = imp_path.split(".", 1)
     module = __import__(module_name)
     obj = attrgetter(obj_name)(module)
 
     return obj
 
+
 def grouper(n, iterable):
-    '''
+    """
     Iterate over an iterator by chunks
-    '''
+    """
     it = iter(iterable)
     while True:
         chunk = tuple(itertools.islice(it, n))

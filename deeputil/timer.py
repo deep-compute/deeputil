@@ -1,9 +1,12 @@
 import time
 
-class FunctionTimerTerminate(Exception): pass
+
+class FunctionTimerTerminate(Exception):
+    pass
+
 
 def FunctionTimer(on_done=None):
-    '''
+    """
     To check execution time of a function
     borrowed from https://medium.com/pythonhive/python-decorator-to-measure-the-execution-time-of-methods-fa04cb6bb36d
 
@@ -28,17 +31,17 @@ def FunctionTimer(on_done=None):
     foo executing...
     ('foo', 3)
     ('bar', 5)
-    '''
-    def decfn(fn):
+    """
 
+    def decfn(fn):
         def timed(*args, **kwargs):
             ts = time.time()
             result = fn(*args, **kwargs)
             te = time.time()
             if on_done:
-                on_done((fn.__name__,int(te - ts)), args, kwargs)
+                on_done((fn.__name__, int(te - ts)), args, kwargs)
             else:
-                print(('%r  %d sec(s)' % (fn.__name__, (te - ts))))
+                print(("%r  %d sec(s)" % (fn.__name__, (te - ts))))
 
             return result
 
@@ -46,10 +49,12 @@ def FunctionTimer(on_done=None):
 
     return decfn
 
+
 FunctionTimer.terminate = FunctionTimerTerminate
 
+
 class BlockTimer:
-    '''
+    """
     To check execution time of a code.
     borrowed from:
     http://preshing.com/20110924/timing-your-code-using-pythons-with-statement/
@@ -59,7 +64,7 @@ class BlockTimer:
     ...
     >>> int(t.interval)
     1
-    '''
+    """
 
     def __enter__(self):
         self.start = time.time()
@@ -68,6 +73,7 @@ class BlockTimer:
     def __exit__(self, *args):
         self.end = time.time()
         self.interval = self.end - self.start
+
 
 class Timer(object):
     decorator = staticmethod(FunctionTimer)
