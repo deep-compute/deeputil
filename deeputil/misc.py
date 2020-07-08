@@ -499,6 +499,7 @@ def set_file_limits(n):
     
     try:
         if os.name == "posix":
+            import resource
             # The resource module only exists on posix systems
             resource.setrlimit(resource.RLIMIT_NOFILE, (n, n))
             return True
