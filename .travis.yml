@@ -5,8 +5,8 @@ deploy:
   skip_cleanup: true
   api_key:
     secure: PqFupE3suSbV1g31hzyrAuQ+Z+lf5sM9ujsFHZQLbPSKXEmmlJk7mokxHuhR34Q6XSdmD1hHoMba91sP8PRm16seqhD8b8uYUdPkZk4acFCZfqKm46iJ2J3xXbxesyjbruuAOywh8jiHAygvyQktIuE/X+FEz7IrFjInBEW2kEaa8blVsFpfrzKcKpPDCCLSjuH4OK5IMt/trhi2/XA4LZpZwKOMGWDDQgdTOfnMR1WGxmFBcn4f5soPrg9SrmeGYxl8SkET5glMS92P/FkjHk/cl/JRk3i5piPxzgN81nEQNs9wmflHBkI3p4JZlAi34fqznvtLezuKI+a/VgHLDqjdBZvR8h9bPoffAtWWj48ZDNkN8JnDkusUHO13pp5LG2S+j7/asrh4nlt1YBQEcsStoU7tRYXIb8TxIU9FIWRHLdhtcIxh+3ZJLGTRyzKpDKcpIN98vH9u4R5xtEXykdH39r4Gqq6MsT9YbxZA1y3vqoTVqvF7ine/h7JFmu1N0DaB7l8VK+d2N5n+AJP3wp348L7RU7Oe/orzFbociuMsnQo1xWdRYzMt1AGD2H51e5XA8ci5n19v6hwcJb4pnacnptJy4r3SLAFvWDcgGg9+6iyvT61krLBbY4ZJ3F/xrSCPcFXPkohRsvVQH2kelhjNwCIZYHWJBnh23en1bOQ=
-  name: deeputil-0.2.9
-  tag_name: 0.2.9
+  name: deeputil-0.2.10
+  tag_name: 0.2.10
   true:
     branch: master
     repo: deep-compute/deeputil
