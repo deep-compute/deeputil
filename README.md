@@ -4,6 +4,8 @@ Commonly re-used logic
 ## 
 ## Installation
 > Prerequisites: Python3+
+
+Not cross-compatible with Windows before version 0.2.10
 ```
 sudo pip install deeputil
 ```

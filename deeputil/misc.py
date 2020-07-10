@@ -489,19 +489,21 @@ class ExpiringCounter(object):
 
 
 # TODO Examples and Readme.md
-import resource
-
-
 def set_file_limits(n):
     """
     Set the limit on number of file descriptors
-    that this process can open.
+    that this process can open. Only works on posix systems.
 
     """
-
     try:
-        resource.setrlimit(resource.RLIMIT_NOFILE, (n, n))
-        return True
+        if os.name == "posix":
+            import resource
+
+            # The resource module only exists on posix systems
+            resource.setrlimit(resource.RLIMIT_NOFILE, (n, n))
+            return True
+        else:
+            return False
     except ValueError:
         return False
 
